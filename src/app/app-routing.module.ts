@@ -24,6 +24,15 @@ const routes: Routes = [{
           name: 'home',
         },
         canActivate: [AuthenticationGuard]
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home',
+        data: {
+          showInMenu: true,
+          name: 'home',
+        }
       }]
   },
   {path: '**', redirectTo: 'home', data: {show: false, name: ''}}];
