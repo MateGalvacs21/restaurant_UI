@@ -4,6 +4,7 @@ import {LoginComponent} from "./shared/components/authentication/login/login.com
 import {AuthenticationGuard} from "./shared/guard/authentication/authentication.guard";
 import {MainComponent} from "./main/main.component";
 import {HomeComponent} from "./main/home/home.component";
+import {StatisticsComponent} from "./main/statistics/statistics.component";
 
 const routes: Routes = [{
   path: 'login',
@@ -22,6 +23,16 @@ const routes: Routes = [{
         data: {
           showInMenu: true,
           name: 'home',
+        },
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'statistics',
+        pathMatch: 'full',
+        component: StatisticsComponent,
+        data: {
+          showInMenu: true,
+          name: 'statistics',
         },
         canActivate: [AuthenticationGuard]
       },

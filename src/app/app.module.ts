@@ -9,13 +9,17 @@ import {AuthenticationGuard} from "./shared/guard/authentication/authentication.
 import {HttpClientModule} from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NavBarComponent } from './main/nav-bar/nav-bar.component';
+import { StatisticsComponent } from './main/statistics/statistics.component';
+import { StoreModule } from '@ngrx/store';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    HomeComponent
+    HomeComponent,
+    NavBarComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

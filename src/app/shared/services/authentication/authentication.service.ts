@@ -19,4 +19,8 @@ export class AuthenticationService {
   public login(user: LoginDTO): Observable<UserDTO> {
     return this.http.post<UserDTO>(ConfigurationService.apiURL() + '/api/authentication/login',user );
   }
+
+  public logout(id: string): Observable<any> {
+    return this.http.delete<any>(ConfigurationService.apiURL()+ '/api/authentication/logout/'+id);
+  }
 }
