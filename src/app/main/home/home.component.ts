@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   private getId(): string {
     const user = localStorage.getItem("loggedUser");
-    if (!user) return "NA";
-    return JSON.parse(user).id;
+    if (!user || !JSON.parse(user).restaurantId ) return "NA";
+    return JSON.parse(user).restaurantId;
   }
 }
