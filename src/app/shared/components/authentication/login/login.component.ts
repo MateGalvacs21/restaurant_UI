@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../../services/authentication/authenti
 import { LoginDTO } from "../../../models/authentication.model";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
+import { LoadingService } from "../../../services/loading/loading.service";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent {
   })
 
 
-  constructor(private readonly formBuilder: FormBuilder, private service: AuthenticationService, private router: Router) {
+  constructor(private readonly formBuilder: FormBuilder,
+              private service: AuthenticationService, private router: Router,
+              private loader: LoadingService) {
   }
 
   public onSubmit() {
@@ -30,7 +33,7 @@ export class LoginComponent {
       email: this.loginForm.get("email")?.value || '',
       password: this.loginForm.get("password")?.value || ''
     };
-
+    this.loader.show();
     this.service.login(user).pipe(
       catchError((error) => throwError(error))
     ).subscribe({
@@ -38,7 +41,11 @@ export class LoginComponent {
           localStorage.setItem("loggedUser", JSON.stringify(login));
           this.router.navigate(["home"]);
         },
-        error: error => alert('Hibás név vagy jelszó! ' + error.error.error + '!')
+        error: error => {
+          this.loader.hide();
+          alert('Hibás név vagy jelszó! ' + error.error.error + '!');
+        },
+        complete: () => this.loader.hide()
       }
     )
   }

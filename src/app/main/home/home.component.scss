@@ -1,0 +1,45 @@
+.card-main {
+  background-color: white;
+  margin: unset;
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.card-content {
+  margin: 15%;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 50px
+}
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-weight: bolder;
+  font-size: 19px;
+  text-decoration: 2px black underline;
+}
+
+p, li {
+  text-align: justify;
+}
+
+.licence-agreement {
+  text-align: right;
+  margin: 15px;
+}
+
+p{
+  margin: 15px;
+}
+h5{
+  text-transform: uppercase;
+}

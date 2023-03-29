@@ -5,6 +5,8 @@ import {AuthenticationGuard} from "./shared/guard/authentication/authentication.
 import {MainComponent} from "./main/main.component";
 import {HomeComponent} from "./main/home/home.component";
 import {StatisticsComponent} from "./main/statistics/statistics.component";
+import { OrdersComponent } from "./main/orders/orders.component";
+import { MenuEditComponent } from "./main/menu-edit/menu-edit.component";
 
 const routes: Routes = [{
   path: 'login',
@@ -33,6 +35,26 @@ const routes: Routes = [{
         data: {
           showInMenu: true,
           name: 'statistics',
+        },
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'orders',
+        pathMatch: 'full',
+        component: OrdersComponent,
+        data: {
+          showInMenu: true,
+          name: 'orders',
+        },
+        canActivate: [AuthenticationGuard]
+      },
+      {
+        path: 'menu-edit',
+        pathMatch: 'full',
+        component: MenuEditComponent,
+        data: {
+          showInMenu: true,
+          name: 'edit',
         },
         canActivate: [AuthenticationGuard]
       },

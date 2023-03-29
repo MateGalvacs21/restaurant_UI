@@ -6,12 +6,15 @@ import { LoginComponent } from './shared/components/authentication/login/login.c
 import { MainComponent } from './main/main.component';
 import { HomeComponent } from './main/home/home.component';
 import {AuthenticationGuard} from "./shared/guard/authentication/authentication.guard";
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
 import { StatisticsComponent } from './main/statistics/statistics.component';
 import { StoreModule } from '@ngrx/store';
+import { OrdersComponent } from './main/orders/orders.component';
+import { MenuEditComponent } from './main/menu-edit/menu-edit.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +22,10 @@ import { StoreModule } from '@ngrx/store';
     MainComponent,
     HomeComponent,
     NavBarComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    OrdersComponent,
+    MenuEditComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
