@@ -26,7 +26,7 @@ export class LoginComponent {
 
   public onSubmit() {
     if (!this.loginForm.get("email")?.value || !this.loginForm.get('password')?.value) {
-      prompt('Minden mezőt ki kell tölteni !');
+      alert('Minden mezőt ki kell tölteni !');
       return;
     }
     const user: LoginDTO = {
@@ -39,7 +39,7 @@ export class LoginComponent {
     ).subscribe({
         next: login => {
           localStorage.setItem("loggedUser", JSON.stringify(login));
-          this.router.navigate(["home"]);
+          this.router.navigate(["home"]).then(()=> true);
         },
         error: error => {
           this.loader.hide();
