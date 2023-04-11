@@ -17,7 +17,7 @@
         Kezdőlap
       </a>
 
-      <a class="navbar-item" routerLinkActive="is-active" routerLink="/statistics">
+      <a class="navbar-item {{isAdmin ? '':'is-disabled'}}" routerLinkActive="is-active" routerLink="/statistics">
         Statisztikák
       </a>
 
@@ -25,7 +25,7 @@
         Rendelések
       </a>
 
-      <a class="navbar-item" routerLinkActive="is-active" routerLink="/menu-edit">
+      <a class="navbar-item {{isAdmin ? '':'is-disabled'}}" routerLinkActive="is-active" routerLink="/menu-edit">
         Étlap módosítás
       </a>
 

@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { OrdersComponent } from './main/orders/orders.component';
 import { MenuEditComponent } from './main/menu-edit/menu-edit.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
+import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
   ],
-  providers: [AuthenticationGuard],
+  providers: [AuthenticationGuard, IsAdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

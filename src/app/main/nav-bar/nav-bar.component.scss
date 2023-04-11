@@ -14,3 +14,9 @@
   0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0,0,0,0.9);
   font-size: 20px;
 }
+
+.is-disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}

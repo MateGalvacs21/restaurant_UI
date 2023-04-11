@@ -7,6 +7,7 @@ import {HomeComponent} from "./main/home/home.component";
 import {StatisticsComponent} from "./main/statistics/statistics.component";
 import { OrdersComponent } from "./main/orders/orders.component";
 import { MenuEditComponent } from "./main/menu-edit/menu-edit.component";
+import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
 
 const routes: Routes = [{
   path: 'login',
@@ -36,7 +37,7 @@ const routes: Routes = [{
           showInMenu: true,
           name: 'statistics',
         },
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard, IsAdminGuard]
       },
       {
         path: 'orders',
@@ -56,7 +57,7 @@ const routes: Routes = [{
           showInMenu: true,
           name: 'edit',
         },
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard, IsAdminGuard]
       },
       {
         path: '',
