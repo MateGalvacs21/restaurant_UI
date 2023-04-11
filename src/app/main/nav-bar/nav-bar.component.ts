@@ -19,6 +19,7 @@ export class NavBarComponent {
     this.loader.show();
     this.authService.logout(userId).subscribe({
       next: () => {
+        localStorage.removeItem('rootState');
         localStorage.removeItem("loggedUser");
         this.loader.hide();
         this.router.navigate(['login']).then(() => true);
