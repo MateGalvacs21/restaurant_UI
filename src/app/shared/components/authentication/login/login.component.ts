@@ -5,7 +5,6 @@ import { LoginDTO } from "../../../models/authentication.model";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
 import { LoadingService } from "../../../services/loading/loading.service";
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

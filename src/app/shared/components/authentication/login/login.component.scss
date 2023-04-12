@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Babas;
+  src: url('../../../../../assets/BebasNeue-Regular.ttf');
+}
+
 form{
   display: flex;
   flex-direction: column;
@@ -10,13 +15,17 @@ form{
  button{
    margin-top: 40px;
    margin-left: 55%;
+   font-family: "Babas", serif;
+   font-size: 17px;
    width: 35%;
  }
 input.ng-invalid.ng-touched{
-  border: 1px solid red;
+  border: 2px solid red;
 }
 .card-main{
-  background-color: #ffffff;
+  background-image: url("../../../../../assets/login-page-bg.jpg");
+  background-size: 1200px 1000px;
+  background-repeat: no-repeat;
   margin: unset;
   width: 50%;
   height: 100%;
@@ -25,6 +34,7 @@ input.ng-invalid.ng-touched{
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  border: 4px solid hsl(206, 70%,96%);
 }
 .login-input{
   display: flex;
@@ -39,12 +49,10 @@ input.ng-invalid.ng-touched{
 .card-box{
   width: 100%;
   height: 400px;
-  border:0.2px solid black;
-  background-color: aliceblue;
+  border:2px solid lightblue;
 }
 svg{
   margin: 15px;
-  color: #5fbfde;
 }
 
 .card-content{
@@ -54,7 +62,7 @@ svg{
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-
+  border: 1px solid lightgray;
 }
 .title{
   padding: 100px;
@@ -62,16 +70,86 @@ svg{
   font-weight: bold;
   font-size: 30px;
   text-transform: uppercase;
-  font-family: "Comic Sans MS";
+  font-family: "Babas", serif;
+  color: white;
 }
 
 h3{
   padding: 15px;
   text-align: center;
-  font-family: "Comic Sans MS";
+  font-family: "Babas", serif;
   font-size: 25px;
 }
 img {
-  width: 48px;
-  height: 48px;
+  width: 55px;
+  height: 55px;
+}
+
+@media screen and (max-width: 500px) {
+  .card-main {
+    width: 100%;
+  }
+
+  .title {
+    padding: 40px;
+  }
+
+  .card-content {
+    width: 100%;
+  }
+
+  button {
+    width: 60%;
+    margin-left: 23%;
+  }
+
+  input {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .card-main {
+    width: 100%;
+  }
+
+  .title {
+    padding: 40px;
+  }
+
+  .card-content {
+    width: 100%;
+  }
+
+  button {
+    width: 60%;
+    margin-left: 23%;
+  }
+
+  input {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .card-main {
+    width: 70%;
+  }
+
+  .title {
+    padding: 60px;
+  }
+
+  .card-content {
+    width: 80%;
+  }
+
+  button {
+    width: 60%;
+    margin-left: 23%;
+  }
+
+  input {
+    width: 80%;
+  }
 }
