@@ -16,7 +16,7 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   })
-
+  public buttonAvailable = false;
 
   constructor(private readonly formBuilder: FormBuilder,
               private service: AuthenticationService, private router: Router,
@@ -24,6 +24,7 @@ export class LoginComponent {
   }
 
   public onSubmit() {
+    if(!this.buttonAvailable) return;
     if (!this.loginForm.get("email")?.value || !this.loginForm.get('password')?.value) {
       alert('Minden mezőt ki kell tölteni !');
       return;
@@ -49,5 +50,13 @@ export class LoginComponent {
     )
   }
 
+  onChange(): void {
+    this.buttonAvailable = this.valid();
+  }
 
+  private valid(): boolean {
+    const email = this.loginForm.get("email")?.valid;
+    const password = this.loginForm.get("password")?.valid;
+    return !!(email && password);
+  }
 }
