@@ -40,22 +40,20 @@
       </tbody>
     </table>
   </div>
-  <div class="column">
-    <h1>Italok</h1>
+  <div class="column columns is-mobile">
+    <div class="column">
+      <h1>Italok</h1>
     <table class="table table-custom">
       <thead>
       <tr>
         <th>Név</th>
-        <th>Ár</th>
         <th>Szerkesztés</th>
         <th>Törlés</th>
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let drink of drinkList">
-        <tr *ngFor="let drinkItem of drink.items">
-          <td>{{drinkItem.name}}</td>
-          <td>{{drinkItem.price}} Ft</td>
+        <tr *ngFor="let drinkGroup of drinkList">
+          <td>{{drinkGroup.name}}</td>
           <td>
             <button class="button is-primary is-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
@@ -66,7 +64,7 @@
             </button>
           </td>
           <td>
-            <button class="button is-danger is-light" (click)="deleteDrink(drink.nameoftype,drinkItem)">
+            <button class="button is-danger is-light" (click)="deleteDrinkGroup(drinkGroup)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                    viewBox="0 0 16 16">
                 <path
@@ -77,8 +75,11 @@
             </button>
           </td>
         </tr>
-      </ng-container>
       </tbody>
     </table>
+      </div>
+    <div class="column">
+      <button class="button is-link is-light add-button">Új elem hozzáadása</button>
+    </div>
   </div>
 </div>

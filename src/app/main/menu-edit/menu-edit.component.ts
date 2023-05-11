@@ -3,7 +3,6 @@ import { MenuDTO } from "../../shared/models/menu.model";
 import { DrinkGroupDTO } from "../../shared/models/drink-group.model";
 import { StoreService } from "../../shared/services/data/store.service";
 import { MenuEditService } from "./service/menu-edit.service";
-import { DrinkItemDTO } from "../../shared/models/drink-item.model";
 
 @Component({
   selector: 'app-menu-edit',
@@ -47,12 +46,9 @@ export class MenuEditComponent implements OnInit {
     })
   }
 
-  deleteDrink(nameOfType:string, inputDrink: DrinkItemDTO) {
-   const drinkGroup = this.drinkList.findIndex((drinkGroup) => drinkGroup.nameoftype === nameOfType);
-   const drinkItem = this.drinkList[drinkGroup].items.findIndex((item)=> item.id === inputDrink.id);
-   const newDrinkItems = this.drinkList[drinkGroup].items.slice(0,drinkItem);
-   this.drinkList[drinkGroup].items = newDrinkItems;
-    this.menuEditService.patchDrink(this.drinkList).subscribe((restaurant) => {
+  deleteDrinkGroup(inputDrink: DrinkGroupDTO) {
+    const newDrinkList = this.drinkList.filter((group)=> group.nameoftype !== inputDrink.nameoftype)
+    this.menuEditService.patchDrink(newDrinkList).subscribe((restaurant) => {
       this.drinkList = restaurant?.drinks ? restaurant.drinks : [];
     })
   }
