@@ -26,7 +26,7 @@
           </button>
         </td>
         <td>
-          <button class="button is-danger is-light">
+          <button (click)="deleteMenu(menu)" class="button is-danger is-light">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                  viewBox="0 0 16 16">
               <path
@@ -66,7 +66,7 @@
             </button>
           </td>
           <td>
-            <button class="button is-danger is-light">
+            <button class="button is-danger is-light" (click)="deleteDrink(drink.nameoftype,drinkItem)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                    viewBox="0 0 16 16">
                 <path

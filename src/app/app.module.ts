@@ -16,6 +16,7 @@ import { OrdersComponent } from './main/orders/orders.component';
 import { MenuEditComponent } from './main/menu-edit/menu-edit.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
+import { EditComponent } from './main/menu-edit/edit/edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
     StatisticsComponent,
     OrdersComponent,
     MenuEditComponent,
-    LoadingComponent
+    LoadingComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,8 @@ import { ConfigurationService } from "../../../shared/services/configuration/con
 import { Observable, of } from "rxjs";
 import { RestaurantDTO } from "../../../shared/models/restaurant.model";
 import { HttpClient } from "@angular/common/http";
+import { MenuDTO } from "../../../shared/models/menu.model";
+import { DrinkGroupDTO } from "../../../shared/models/drink-group.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +22,15 @@ private readonly id = this.getId();
     const user = localStorage.getItem("loggedUser");
     if (!user) return "";
     return JSON.parse(user).restaurantId;
+  }
+
+  public patchMenu(updatedMenu: MenuDTO[]): Observable<RestaurantDTO | null>{
+    if(!this.id) return of(null);
+    return this.http.patch<RestaurantDTO>(ConfigurationService.apiURL() + '/api/restaurant/' + this.id + '/menu', {menu: updatedMenu});
+  }
+
+  public patchDrink(updatedDrink: DrinkGroupDTO[]): Observable<RestaurantDTO | null>{
+    if(!this.id) return of(null);
+    return this.http.patch<RestaurantDTO>(ConfigurationService.apiURL() + '/api/restaurant/' + this.id + '/drink', {drinks: updatedDrink});
   }
 }
