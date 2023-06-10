@@ -61,17 +61,7 @@ const routes: Routes = [{
         canActivate: [AuthenticationGuard, IsAdminGuard]
       },
       {
-        path: 'menu-edit/menu/:id',
-        pathMatch: 'full',
-        component: EditComponent,
-        data: {
-          showInMenu: true,
-          name: 'edit',
-        },
-        canActivate: [AuthenticationGuard, IsAdminGuard]
-      },
-      {
-        path: 'menu-edit/drink/:nameoftype',
+        path: 'menu-edit/edit/menu/:id',
         pathMatch: 'full',
         component: EditComponent,
         data: {

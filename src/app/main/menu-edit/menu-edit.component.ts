@@ -40,7 +40,7 @@ export class MenuEditComponent implements OnInit {
 
   deleteMenu(inputMenu: MenuDTO) {
       const newMenuList = this.menuList.filter((listedMenu) => listedMenu.id !== inputMenu.id)
-
+    if (!window.confirm("Biztos törölni szeretnéd?")) return;
     this.menuEditService.patchMenu(newMenuList).subscribe((restaurant) => {
       this.menuList = restaurant?.menu ? restaurant.menu.sort(this.compare) : [];
     })
@@ -48,6 +48,7 @@ export class MenuEditComponent implements OnInit {
 
   deleteDrinkGroup(inputDrink: DrinkGroupDTO) {
     const newDrinkList = this.drinkList.filter((group)=> group.nameoftype !== inputDrink.nameoftype)
+    if (!window.confirm("Biztos törölni szeretnéd?")) return;
     this.menuEditService.patchDrink(newDrinkList).subscribe((restaurant) => {
       this.drinkList = restaurant?.drinks ? restaurant.drinks : [];
     })

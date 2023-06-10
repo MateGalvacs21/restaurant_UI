@@ -28,7 +28,6 @@ private readonly id = this.getId();
     if(!this.id) return of(null);
     return this.http.patch<RestaurantDTO>(ConfigurationService.apiURL() + '/api/restaurant/' + this.id + '/menu', {menu: updatedMenu});
   }
-
   public patchDrink(updatedDrink: DrinkGroupDTO[]): Observable<RestaurantDTO | null>{
     if(!this.id) return of(null);
     return this.http.patch<RestaurantDTO>(ConfigurationService.apiURL() + '/api/restaurant/' + this.id + '/drink', {drinks: updatedDrink});

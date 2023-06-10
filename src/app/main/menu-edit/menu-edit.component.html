@@ -17,7 +17,7 @@
         <td>{{menu.nickname}}</td>
         <td>{{menu.price}} Ft</td>
         <td>
-          <button class="button is-primary is-light">
+          <button class="button is-primary is-light" routerLink="/menu-edit/edit/menu/{{menu.id}}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                  viewBox="0 0 16 16">
               <path
@@ -79,7 +79,22 @@
     </table>
       </div>
     <div class="column">
-      <button class="button is-link is-light add-button">Új elem hozzáadása</button>
+      <nav class="navbar add-button" role="navigation" aria-label="dropdown navigation">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Új hozzáadása
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" routerLink="/menu-edit/edit">
+              Új étel
+            </a>
+            <a class="navbar-item">
+              Új ital csoport
+            </a>
+          </div>
+        </div>
+      </nav>
     </div>
   </div>
 </div>
