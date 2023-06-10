@@ -55,7 +55,7 @@
         <tr *ngFor="let drinkGroup of drinkList">
           <td>{{drinkGroup.name}}</td>
           <td>
-            <button class="button is-primary is-light">
+            <button class="button is-primary is-light" routerLink="/menu-edit/edit/drink/{{drinkGroup.nameoftype}}">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                    viewBox="0 0 16 16">
                 <path
@@ -86,10 +86,10 @@
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item" routerLink="/menu-edit/edit">
+            <a class="navbar-item" routerLink="/menu-edit/edit/menu">
               Új étel
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" routerLink="/menu-edit/edit/drink">
               Új ital csoport
             </a>
           </div>

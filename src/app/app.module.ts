@@ -16,7 +16,9 @@ import { OrdersComponent } from './main/orders/orders.component';
 import { MenuEditComponent } from './main/menu-edit/menu-edit.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
-import { EditComponent } from './main/menu-edit/edit/edit.component';
+import { EditComponent } from './main/menu-edit/edit/food-edit/edit.component';
+import { DrinkEditComponent } from './main/menu-edit/edit/drink-edit/drink-edit.component';
+import { DrinkEditModalComponent } from './main/menu-edit/edit/drink-edit/drink-edit-modal/drink-edit-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,9 @@ import { EditComponent } from './main/menu-edit/edit/edit.component';
     OrdersComponent,
     MenuEditComponent,
     LoadingComponent,
-    EditComponent
+    EditComponent,
+    DrinkEditComponent,
+    DrinkEditModalComponent
   ],
   imports: [
     BrowserModule,

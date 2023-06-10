@@ -1,0 +1,19 @@
+<div class="modal-background"></div>
+<div class="modal-card">
+  <header class="modal-card-head">
+    <p class="modal-card-title">Ital hozzáadása az ital csoporthoz</p>
+    <button class="delete" aria-label="close"></button>
+  </header>
+  <section class="modal-card-body">
+    <form [formGroup]="drinkItemForm" (input)="buttonAvailableChange()">
+      <input class="input is-info" type="text" formControlName="name" placeholder="Név">
+      <br>
+      <br>
+      <input class="input is-info" type="number" formControlName="price" placeholder="Ár">
+    </form>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success {{buttonAvailable ? '' : 'is-disabled'}}" (click)="save()">Ital hozzáadás</button>
+    <button class="button" (click)="cancel()">Mégse</button>
+  </footer>
+</div>

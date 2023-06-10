@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { MenuDTO } from "../../../shared/models/menu.model";
-import { StoreService } from "../../../shared/services/data/store.service";
+import { MenuDTO } from "../../../../shared/models/menu.model";
+import { StoreService } from "../../../../shared/services/data/store.service";
 import { FormBuilder, Validators } from "@angular/forms";
-import { Afa } from "../../../shared/models/coin.model";
-import { MenuEditService } from "../service/menu-edit.service";
-import { RootState } from "../../../shared/models/root-state.model";
-import { LoadingService } from "../../../shared/services/loading/loading.service";
+import { Afa } from "../../../../shared/models/coin.model";
+import { MenuEditService } from "../../service/menu-edit.service";
+import { RootState } from "../../../../shared/models/root-state.model";
+import { LoadingService } from "../../../../shared/services/loading/loading.service";
 
 @Component({
   selector: 'app-edit',
@@ -48,13 +48,11 @@ export class EditComponent implements OnInit {
           this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
         }
       })
-
   }
 
   onSubmit() {
    this.saveEditing();
    setTimeout(()=> this.cancelEditing(), 1500);
-
   }
 
   onTypeChange(event: any) {
@@ -65,9 +63,9 @@ export class EditComponent implements OnInit {
     this.menuForm.get("afa")?.setValue(event.target.value);
   }
 
-  loadMenu(menu: MenuDTO | undefined) {
+  private loadMenu(menu: MenuDTO | undefined) {
     if (!menu) {
-      this.router.navigate(["menu-edit/edit"]).then();
+      this.router.navigate(["menu-edit/edit/menu"]).then();
     }
     this.menuForm.get('name')?.setValue(menu?.name ? menu.name : null);
     this.menuForm.get('nickname')?.setValue(menu?.nickname ? menu.nickname : null);

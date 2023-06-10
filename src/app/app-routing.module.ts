@@ -8,7 +8,8 @@ import {StatisticsComponent} from "./main/statistics/statistics.component";
 import { OrdersComponent } from "./main/orders/orders.component";
 import { MenuEditComponent } from "./main/menu-edit/menu-edit.component";
 import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
-import { EditComponent } from "./main/menu-edit/edit/edit.component";
+import { EditComponent } from "./main/menu-edit/edit/food-edit/edit.component";
+import { DrinkEditComponent } from "./main/menu-edit/edit/drink-edit/drink-edit.component";
 
 const routes: Routes = [{
   path: 'login',
@@ -71,7 +72,27 @@ const routes: Routes = [{
         canActivate: [AuthenticationGuard, IsAdminGuard]
       },
       {
-        path: 'menu-edit/edit',
+        path: 'menu-edit/edit/drink/:id',
+        pathMatch: 'full',
+        component: DrinkEditComponent,
+        data: {
+          showInMenu: true,
+          name: 'edit',
+        },
+        canActivate: [AuthenticationGuard, IsAdminGuard]
+      },
+      {
+        path: 'menu-edit/edit/drink',
+        pathMatch: 'full',
+        component: DrinkEditComponent,
+        data: {
+          showInMenu: true,
+          name: 'menu-list',
+        },
+        canActivate: [AuthenticationGuard, IsAdminGuard]
+      },
+      {
+        path: 'menu-edit/edit/menu',
         pathMatch: 'full',
         component: EditComponent,
         data: {
