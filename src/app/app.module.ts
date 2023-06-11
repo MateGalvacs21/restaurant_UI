@@ -19,6 +19,7 @@ import { IsAdminGuard } from "./shared/guard/authentication/is-admin.guard";
 import { EditComponent } from './main/menu-edit/edit/food-edit/edit.component';
 import { DrinkEditComponent } from './main/menu-edit/edit/drink-edit/drink-edit.component';
 import { DrinkEditModalComponent } from './main/menu-edit/edit/drink-edit/drink-edit-modal/drink-edit-modal.component';
+import { ToastrModule } from "ngx-toastr";
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { DrinkEditModalComponent } from './main/menu-edit/edit/drink-edit/drink-
     FormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
+    ToastrModule.forRoot(),
   ],
   providers: [AuthenticationGuard, IsAdminGuard],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import { DrinkItemDTO } from "../../../../shared/models/drink-item.model";
 import { DrinkGroupDTO } from "../../../../shared/models/drink-group.model";
 import { Afa } from "../../../../shared/models/coin.model";
 import { RootState } from "../../../../shared/models/root-state.model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-drink-edit',
@@ -29,7 +30,8 @@ export class DrinkEditComponent implements OnInit{
               private router: Router,
               private menuEditService: MenuEditService,
               private dataService: StoreService,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService,
+              private toastService: ToastrService) {
   }
   ngOnInit(): void {
     this.modalConfig();
@@ -77,25 +79,24 @@ export class DrinkEditComponent implements OnInit{
         this.drinkList.push(drink);
       }
 
-      this.menuEditService.patchDrink(this.drinkList).subscribe();
+      this.menuEditService.patchDrink(this.drinkList).subscribe(() => this.loadingService.hide());
       this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
         const rootState: RootState = {
           restaurant: restaurant ? {...restaurant, drinks: this.drinkList} : restaurant,
           statistics: statistics
         };
         localStorage.setItem('rootState', JSON.stringify(rootState));
-        this.loadingService.hide();
-        window.alert("Sikeres mentés!");
+        this.toastService.success('Sikeres mentés!');
       })
     } else {
-      window.alert("Hibás kitöltés!");
+      this.toastService.error("Hibás kitöltés!");
       return;
     }
   }
 
   saveAndClose() {
     this.saveEditing();
-    setTimeout(() => this.cancelEditing(), 1500);
+    setTimeout(() => this.cancelEditing(), 1000);
   }
 
   private loadDrink(drink: DrinkGroupDTO | undefined) {

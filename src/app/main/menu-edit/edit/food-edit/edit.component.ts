@@ -7,6 +7,7 @@ import { Afa } from "../../../../shared/models/coin.model";
 import { MenuEditService } from "../../service/menu-edit.service";
 import { RootState } from "../../../../shared/models/root-state.model";
 import { LoadingService } from "../../../../shared/services/loading/loading.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-edit',
@@ -35,24 +36,25 @@ export class EditComponent implements OnInit {
               private router: Router,
               private menuEditService: MenuEditService,
               private dataService: StoreService,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService,
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((param) => {
       this.menuEdited = param.get("id");
     });
-      this.storeService.selectRestaurant().subscribe((restaurant) => {
-        this.menuList = restaurant?.menu ? restaurant.menu : [];
-        if(this.menuEdited) {
-          this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
-        }
-      })
+    this.storeService.selectRestaurant().subscribe((restaurant) => {
+      this.menuList = restaurant?.menu ? restaurant.menu : [];
+      if (this.menuEdited) {
+        this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
+      }
+    })
   }
 
   onSubmit() {
-   this.saveEditing();
-   setTimeout(()=> this.cancelEditing(), 1500);
+    this.saveEditing();
+    setTimeout(() => this.cancelEditing(), 1000);
   }
 
   onTypeChange(event: any) {
@@ -80,7 +82,7 @@ export class EditComponent implements OnInit {
     this.menuItems.forEach((listItem) => {
       if (listItem.toUpperCase() === item.toUpperCase()) {
         haveItem = true;
-        window.alert("Ez a hozzávaló már szerepel a listában!");
+        this.toastService.error("Ez a hozzávaló már szerepel a listában!");
       }
     });
     if (!haveItem) {
@@ -120,18 +122,17 @@ export class EditComponent implements OnInit {
         this.menuList.push(menu);
       }
 
-      this.menuEditService.patchMenu(this.menuList).subscribe();
+      this.menuEditService.patchMenu(this.menuList).subscribe(() => this.loadingService.hide());
       this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
         const rootState: RootState = {
           restaurant: restaurant ? {...restaurant, menu: this.menuList} : restaurant,
           statistics: statistics
         };
         localStorage.setItem('rootState', JSON.stringify(rootState));
-        this.loadingService.hide();
-        window.alert("Sikeres mentés!");
+        this.toastService.success("Sikeres mentés!");
       })
     } else {
-      window.alert("Hibás kitöltés!");
+      this.toastService.error("Hibás kiröltés!");
       return;
     }
   }

@@ -3,6 +3,7 @@ import { MenuDTO } from "../../shared/models/menu.model";
 import { DrinkGroupDTO } from "../../shared/models/drink-group.model";
 import { StoreService } from "../../shared/services/data/store.service";
 import { MenuEditService } from "./service/menu-edit.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-menu-edit',
@@ -13,7 +14,7 @@ export class MenuEditComponent implements OnInit {
   public menuList: MenuDTO[] = [];
   public drinkList: DrinkGroupDTO[] = [];
 
-  constructor(private storageService: StoreService, private menuEditService: MenuEditService) {
+  constructor(private storageService: StoreService, private menuEditService: MenuEditService, private toastService: ToastrService) {
   }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class MenuEditComponent implements OnInit {
     if (!window.confirm("Biztos törölni szeretnéd?")) return;
     this.menuEditService.patchMenu(newMenuList).subscribe((restaurant) => {
       this.menuList = restaurant?.menu ? restaurant.menu.sort(this.compare) : [];
+      this.toastService.success("Sikeres törlés!");
     })
   }
 
@@ -51,6 +53,7 @@ export class MenuEditComponent implements OnInit {
     if (!window.confirm("Biztos törölni szeretnéd?")) return;
     this.menuEditService.patchDrink(newDrinkList).subscribe((restaurant) => {
       this.drinkList = restaurant?.drinks ? restaurant.drinks : [];
+      this.toastService.success("Sikeres törlés!");
     })
   }
 }

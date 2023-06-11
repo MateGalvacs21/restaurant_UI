@@ -5,6 +5,7 @@ import { LoginDTO } from "../../../models/authentication.model";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
 import { LoadingService } from "../../../services/loading/loading.service";
+import { ToastrService } from "ngx-toastr";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,13 +21,14 @@ export class LoginComponent {
 
   constructor(private readonly formBuilder: FormBuilder,
               private service: AuthenticationService, private router: Router,
-              private loader: LoadingService) {
+              private loader: LoadingService,
+              private toastService: ToastrService) {
   }
 
   public onSubmit() {
     if(!this.buttonAvailable) return;
     if (!this.loginForm.get("email")?.value || !this.loginForm.get('password')?.value) {
-      alert('Minden mezőt ki kell tölteni !');
+      this.toastService.warning('Minden mezőt ki kell tölteni !');
       return;
     }
     const user: LoginDTO = {
@@ -40,10 +42,11 @@ export class LoginComponent {
         next: login => {
           localStorage.setItem("loggedUser", JSON.stringify(login));
           this.router.navigate(["home"]).then(()=> true);
+          this.toastService.success('Sikeres bejelentkezés! Üdvözlünk!')
         },
         error: error => {
           this.loader.hide();
-          alert('Hibás név vagy jelszó! ' + error.error.error + '!');
+          this.toastService.error('Hibás név vagy jelszó! ' + error.error.error + '!')
         },
         complete: () => this.loader.hide()
       }

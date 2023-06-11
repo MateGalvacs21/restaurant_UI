@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { DrinkItemDTO } from "../../../../../shared/models/drink-item.model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-drink-edit-modal',
@@ -19,7 +20,7 @@ export class DrinkEditModalComponent implements OnInit{
     name: ['', [Validators.required]],
     price: ['', [Validators.required]]
   })
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor(private readonly formBuilder: FormBuilder, private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +40,8 @@ export class DrinkEditModalComponent implements OnInit{
         id: this.drinkItem ? this.drinkItem.id : this.generateId()
       }
       this.newDrinkItem.emit(drinkItem);
+      this.toastService.success('Sikeres hozzáadás !')
+      this.cancel();
     }
   }
 
