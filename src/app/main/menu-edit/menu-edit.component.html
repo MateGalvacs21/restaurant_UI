@@ -1,3 +1,9 @@
+<div id="modal-delete-food" class="modal">
+  <app-dialog (answerer)="deleteMenu()" [dialog]="dialog"></app-dialog>
+</div>
+<div id="modal-delete-drink" class="modal">
+  <app-dialog (answerer)="deleteDrinkGroup()" [dialog]="dialog"></app-dialog>
+</div>
 <div class="columns is-mobile">
   <div class="column">
     <h1>Étlap</h1>
@@ -26,7 +32,7 @@
           </button>
         </td>
         <td>
-          <button (click)="deleteMenu(menu)" class="button is-danger is-light">
+          <button class="button is-danger is-light js-modal-trigger" (focus)="setSelectedMenu(menu)" data-target="modal-delete-food">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                  viewBox="0 0 16 16">
               <path
@@ -64,7 +70,7 @@
             </button>
           </td>
           <td>
-            <button class="button is-danger is-light" (click)="deleteDrinkGroup(drinkGroup)">
+            <button class="button is-danger is-light js-modal-trigger" (focus)="setSelectedDrink(drinkGroup)" data-target="modal-delete-drink">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                    viewBox="0 0 16 16">
                 <path

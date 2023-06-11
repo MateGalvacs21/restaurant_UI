@@ -1,0 +1,12 @@
+<div class="modal-background"></div>
+<div class="modal-card">
+  <header class="modal-card-head has-background-{{dialog.class}}">
+    <p class="modal-card-title">{{dialog.title}}</p>
+    <button class="delete" aria-label="close"></button>
+  </header>
+  <p class="modal-card-body">{{dialog.question}}</p>
+  <footer class="modal-card-foot has-background-{{dialog.class}}">
+    <button class="button is-primary" (click)="onSubmit()">Igen</button>
+    <button class="button">Nem</button>
+  </footer>
+</div>

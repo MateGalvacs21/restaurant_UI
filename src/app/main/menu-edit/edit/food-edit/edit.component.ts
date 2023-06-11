@@ -8,6 +8,8 @@ import { MenuEditService } from "../../service/menu-edit.service";
 import { RootState } from "../../../../shared/models/root-state.model";
 import { LoadingService } from "../../../../shared/services/loading/loading.service";
 import { ToastrService } from "ngx-toastr";
+import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
+import { DialogType } from "../../../../shared/components/dialog/helpers/types/dialog.type";
 
 @Component({
   selector: 'app-edit',
@@ -22,6 +24,12 @@ export class EditComponent implements OnInit {
   supportedTypes = ["Leves", "foetel", "martas", "desszert", "salata"];
   supportedAfa = [5, 27];
   buttonAvailable = false;
+  deletedItem = '';
+  public dialog: DialogType = {
+    class:"danger",
+    question: "Biztos törölni szeretnéd?",
+    title: "Törlés"
+  };
   public menuForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     nickname: ['', [Validators.required]],
@@ -50,6 +58,7 @@ export class EditComponent implements OnInit {
         this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
       }
     })
+    modalConfig('click');
   }
 
   onSubmit() {
@@ -137,6 +146,9 @@ export class EditComponent implements OnInit {
     }
   }
 
+  setDeletedItem(item: string) {
+    this.deletedItem = item;
+  }
   private valid(): boolean {
     const name = this.menuForm.get("name")?.valid;
     const nickname = this.menuForm.get("nickname")?.valid;

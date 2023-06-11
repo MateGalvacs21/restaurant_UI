@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { DrinkItemDTO } from "../../../../../shared/models/drink-item.model";
 import { ToastrService } from "ngx-toastr";
@@ -8,13 +8,14 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: './drink-edit-modal.component.html',
   styleUrls: ['./drink-edit-modal.component.scss']
 })
-export class DrinkEditModalComponent implements OnInit{
+export class DrinkEditModalComponent implements OnChanges{
   @Input()
   drinkItem: DrinkItemDTO = {id: '', name: '', price: parseInt('')};
+  @Input()
+  baseModalConfig = {title: "Ital hozzáadása az ital csoporthoz", button: 'Ital hozzáadás'};
 
   @Output()
   newDrinkItem = new EventEmitter<DrinkItemDTO>();
-
   buttonAvailable = false;
   public drinkItemForm = this.formBuilder.group({
     name: ['', [Validators.required]],
@@ -23,7 +24,7 @@ export class DrinkEditModalComponent implements OnInit{
   constructor(private readonly formBuilder: FormBuilder, private toastService: ToastrService) {
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.drinkItemForm.get("name")?.setValue(this.drinkItem.name);
     this.drinkItemForm.get("price")?.setValue(this.drinkItem.price.toString());
   }
@@ -42,6 +43,9 @@ export class DrinkEditModalComponent implements OnInit{
       this.newDrinkItem.emit(drinkItem);
       this.toastService.success('Sikeres hozzáadás !')
       this.cancel();
+    }
+    else {
+      this.toastService.error("Hibás kitöltés!")
     }
   }
 

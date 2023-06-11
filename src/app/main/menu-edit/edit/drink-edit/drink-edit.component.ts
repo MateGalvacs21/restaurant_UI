@@ -9,6 +9,8 @@ import { DrinkGroupDTO } from "../../../../shared/models/drink-group.model";
 import { Afa } from "../../../../shared/models/coin.model";
 import { RootState } from "../../../../shared/models/root-state.model";
 import { ToastrService } from "ngx-toastr";
+import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
+import { DialogType } from "../../../../shared/components/dialog/helpers/types/dialog.type";
 
 @Component({
   selector: 'app-drink-edit',
@@ -20,6 +22,14 @@ export class DrinkEditComponent implements OnInit{
   drinkItems: DrinkItemDTO[] = [];
   drinkList: DrinkGroupDTO[] = [];
   supportedAfa = [5, 27];
+  modalConfig = {title: "Ital szerkesztése az ital csoportban", button: 'Szerkesztés mentése'};
+  deletedItem: DrinkItemDTO = {name:'', price:parseInt(''), id: ''};
+  public dialog: DialogType = {
+    class:"danger",
+    question: "Biztos törölni szeretnéd?",
+    title: "Törlés"
+  };
+  selectedDrinkItem: DrinkItemDTO = {id: '', price: parseInt(''), name: ''};
   public drinkForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     afa: ['', [Validators.required]]
@@ -34,7 +44,7 @@ export class DrinkEditComponent implements OnInit{
               private toastService: ToastrService) {
   }
   ngOnInit(): void {
-    this.modalConfig();
+    modalConfig('click');
     this.activatedRoute.paramMap.subscribe((param) => {
       this.drinkEdit = param.get("id");
     });
@@ -99,6 +109,17 @@ export class DrinkEditComponent implements OnInit{
     setTimeout(() => this.cancelEditing(), 1000);
   }
 
+  setEditedDrinkItem(item: DrinkItemDTO) {
+    this.selectedDrinkItem = item;
+  }
+  setDeletedDrinkItem(item: DrinkItemDTO) {
+    this.deletedItem = item;
+  }
+  editDrinkItem(item: DrinkItemDTO) {
+    const index = this.drinkItems.findIndex((listItem) => listItem.id === item.id);
+    this.drinkItems[index] = item;
+  }
+
   private loadDrink(drink: DrinkGroupDTO | undefined) {
     if (!drink) {
       this.router.navigate(["menu-edit/edit/drink"]).then();
@@ -106,48 +127,6 @@ export class DrinkEditComponent implements OnInit{
     this.drinkForm.get('name')?.setValue(drink?.name ? drink.name : null);
     this.drinkForm.get('afa')?.setValue(drink?.afa ? drink.afa.toString() : null);
     this.drinkItems = drink?.items ? drink.items : [];
-  }
-  private modalConfig() {
-    document.addEventListener('click', () => {
-      function openModal($el: any) {
-        $el.classList.add('is-active');
-      }
-
-      function closeModal($el: any) {
-        $el.classList.remove('is-active');
-      }
-
-      function closeAllModals() {
-        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-          closeModal($modal);
-        });
-      }
-
-      (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger: any) => {
-        const modal = $trigger.dataset.target;
-        const $target = document.getElementById(modal);
-
-        $trigger.addEventListener('click', () => {
-          openModal($target);
-        });
-      });
-
-      (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-        const $target = $close.closest('.modal');
-
-        $close.addEventListener('click', () => {
-          closeModal($target);
-        });
-      });
-
-      document.addEventListener('keydown', (event) => {
-        const e = event || window.event;
-
-        if (e.keyCode === 27) {
-          closeAllModals();
-        }
-      });
-    });
   }
 
   private generateId(): string {

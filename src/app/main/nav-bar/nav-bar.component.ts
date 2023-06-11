@@ -3,6 +3,9 @@ import { AuthenticationService } from "../../shared/services/authentication/auth
 import { Router } from "@angular/router";
 import { LoadingService } from "../../shared/services/loading/loading.service";
 import { StoreService } from "../../shared/services/data/store.service";
+import { ToastrService } from "ngx-toastr";
+import { modalConfig } from "../../shared/components/dialog/helpers/function/modal-configuration";
+import { DialogType } from "../../shared/components/dialog/helpers/types/dialog.type";
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,16 +14,25 @@ import { StoreService } from "../../shared/services/data/store.service";
 })
 export class NavBarComponent implements OnInit {
   isAdmin: boolean = false;
+  dialog: DialogType = {
+    title: "Kilépés",
+    question: "Biztos kiakarsz lépni?",
+    class: "warning"
+  }
 
-  constructor(private authService: AuthenticationService, private router: Router, private loader: LoadingService, private store: StoreService) {
+  constructor(private authService: AuthenticationService,
+              private router: Router,
+              private loader: LoadingService,
+              private store: StoreService,
+              private toast: ToastrService) {
   }
 
   ngOnInit(): void {
     this.isAdmin = this.store.selectUserIsAdmin();
+    modalConfig('DOMContentLoaded');
   }
 
   public logOut(): void {
-    if (!window.confirm("Biztos ki szeretne lépni?")) return;
     const userId = this.getId();
     this.loader.show();
     this.authService.logout(userId).subscribe({
@@ -32,12 +44,12 @@ export class NavBarComponent implements OnInit {
       },
       error: () => {
         this.loader.hide();
-        alert('Internal Server Error!');
+        this.toast.error("Szerverhiba! ☹")
       }
     })
   }
 
-  private getId(): string {
+  getId(): string {
     const user = localStorage.getItem("loggedUser");
     if (!user) return "";
     return JSON.parse(user).id;

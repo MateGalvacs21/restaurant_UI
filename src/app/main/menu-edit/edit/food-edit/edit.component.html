@@ -1,3 +1,6 @@
+<div id="modal-delete-food-item" class="modal">
+  <app-dialog (answerer)="deleteItem(deletedItem)" [dialog]="dialog"></app-dialog>
+</div>
 <div class="card card-main">
   <div class="card-content">
     <h1>Szerkeztés</h1>
@@ -44,7 +47,9 @@
 <ng-template #items>
   <div *ngFor="let item of menuItems" class="item">
     <span>{{item}}
-      <button class="button is-danger is-light is-small" (click)="deleteItem(item)"><svg
+      <button class="button is-danger is-light is-small js-modal-trigger"
+              (focus)="setDeletedItem(item)"
+              data-target="modal-delete-food-item"><svg
         xmlns="http://www.w3.org/2000/svg" width="16" height="16"
         fill="currentColor" class="bi bi-x"
         viewBox="0 0 16 16">

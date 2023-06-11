@@ -20,6 +20,7 @@ import { EditComponent } from './main/menu-edit/edit/food-edit/edit.component';
 import { DrinkEditComponent } from './main/menu-edit/edit/drink-edit/drink-edit.component';
 import { DrinkEditModalComponent } from './main/menu-edit/edit/drink-edit/drink-edit-modal/drink-edit-modal.component';
 import { ToastrModule } from "ngx-toastr";
+import { DialogComponent } from './shared/components/dialog/dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,8 @@ import { ToastrModule } from "ngx-toastr";
     LoadingComponent,
     EditComponent,
     DrinkEditComponent,
-    DrinkEditModalComponent
+    DrinkEditModalComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
