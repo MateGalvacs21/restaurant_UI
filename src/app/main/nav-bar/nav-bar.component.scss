@@ -1,6 +1,6 @@
 .is-active {
-  background-color: #00d1b2 !important;
-  color: white !important;
+  background-color: #DEB887 !important;
+  color: black !important;
 }
 
 .brand {
@@ -25,4 +25,12 @@
   font-family: "Yu Gothic Light", serif;
   text-transform: uppercase;
   font-size: 12px;
+}
+
+.custom-color {
+  background-color: #AA6C39;
+}
+
+.navbar-item {
+  color: white;
 }
