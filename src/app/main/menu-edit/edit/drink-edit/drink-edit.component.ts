@@ -7,7 +7,6 @@ import { LoadingService } from "../../../../shared/services/loading/loading.serv
 import { DrinkItemDTO } from "../../../../shared/models/drink-item.model";
 import { DrinkGroupDTO } from "../../../../shared/models/drink-group.model";
 import { Afa } from "../../../../shared/models/coin.model";
-import { RootState } from "../../../../shared/models/root-state.model";
 import { ToastrService } from "ngx-toastr";
 import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../../../shared/components/dialog/helpers/types/dialog.type";
@@ -39,7 +38,6 @@ export class DrinkEditComponent implements OnInit{
               private readonly formBuilder: FormBuilder,
               private router: Router,
               private menuEditService: MenuEditService,
-              private dataService: StoreService,
               private loadingService: LoadingService,
               private toastService: ToastrService) {
   }
@@ -89,15 +87,20 @@ export class DrinkEditComponent implements OnInit{
         this.drinkList.push(drink);
       }
 
-      this.menuEditService.patchDrink(this.drinkList).subscribe(() => this.loadingService.hide());
-      this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
-        const rootState: RootState = {
-          restaurant: restaurant ? {...restaurant, drinks: this.drinkList} : restaurant,
-          statistics: statistics
+      this.menuEditService.patchDrink(this.drinkList).subscribe((restaurant) => {
+        const store  = localStorage.getItem('rootState');
+        if (!store){
+          this.toastService.error("Szerverhiba! 😶");
+          return;
+        }
+        const newState = {
+          restaurant: restaurant,
+          statistics: JSON.parse(store).statistics
         };
-        localStorage.setItem('rootState', JSON.stringify(rootState));
-        this.toastService.success('Sikeres mentés!');
-      })
+        localStorage.setItem('rootState', JSON.stringify(newState));
+        this.toastService.success("Sikeres mentés!");
+        this.loadingService.hide();
+      });
     } else {
       this.toastService.error("Hibás kitöltés!");
       return;
@@ -106,7 +109,7 @@ export class DrinkEditComponent implements OnInit{
 
   saveAndClose() {
     this.saveEditing();
-    setTimeout(() => this.cancelEditing(), 1000);
+    setTimeout(() => this.cancelEditing(), 500);
   }
 
   setEditedDrinkItem(item: DrinkItemDTO) {

@@ -5,7 +5,6 @@ import { StoreService } from "../../../../shared/services/data/store.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Afa } from "../../../../shared/models/coin.model";
 import { MenuEditService } from "../../service/menu-edit.service";
-import { RootState } from "../../../../shared/models/root-state.model";
 import { LoadingService } from "../../../../shared/services/loading/loading.service";
 import { ToastrService } from "ngx-toastr";
 import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
@@ -43,7 +42,6 @@ export class EditComponent implements OnInit {
               private readonly formBuilder: FormBuilder,
               private router: Router,
               private menuEditService: MenuEditService,
-              private dataService: StoreService,
               private loadingService: LoadingService,
               private toastService: ToastrService) {
   }
@@ -63,7 +61,7 @@ export class EditComponent implements OnInit {
 
   onSubmit() {
     this.saveEditing();
-    setTimeout(() => this.cancelEditing(), 1000);
+    setTimeout(() => this.cancelEditing(), 500);
   }
 
   onTypeChange(event: any) {
@@ -131,15 +129,20 @@ export class EditComponent implements OnInit {
         this.menuList.push(menu);
       }
 
-      this.menuEditService.patchMenu(this.menuList).subscribe(() => this.loadingService.hide());
-      this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
-        const rootState: RootState = {
-          restaurant: restaurant ? {...restaurant, menu: this.menuList} : restaurant,
-          statistics: statistics
+      this.menuEditService.patchMenu(this.menuList).subscribe((restaurant) => {
+        const store  = localStorage.getItem('rootState');
+        if (!store){
+          this.toastService.error("Szerverhiba! 😶");
+          return;
+        }
+        const newState = {
+          restaurant: restaurant,
+          statistics: JSON.parse(store).statistics
         };
-        localStorage.setItem('rootState', JSON.stringify(rootState));
+        localStorage.setItem('rootState', JSON.stringify(newState));
         this.toastService.success("Sikeres mentés!");
-      })
+        this.loadingService.hide();
+      });
     } else {
       this.toastService.error("Hibás kiröltés!");
       return;

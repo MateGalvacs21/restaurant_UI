@@ -34,7 +34,7 @@ export class MenuEditComponent implements OnInit {
       }
       this.menuList = restaurant.menu.sort(this.compare);
       this.drinkList = restaurant.drinks;
-    })
+    }).unsubscribe();
     modalConfig('click');
   }
 
