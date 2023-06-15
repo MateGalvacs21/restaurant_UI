@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MenuEditService } from "../../../main/menu-edit/service/menu-edit.service";
 import { StatisticsService } from "../../../main/statistics/service/statistics.service";
-import { combineLatest, Observable, of} from "rxjs";
-import { RestaurantDTO } from "../../models/restaurant.model";
+import { combineLatest, Observable, of } from "rxjs";
 import { Statistics } from "../../models/order.model";
 import { UserDTO } from "../../models/authentication.model";
+import { MenuDTO } from "../../models/menu.model";
+import { DrinkGroupDTO } from "../../models/drink-group.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,25 @@ export class StoreService {
     return combineLatest(this.menuService.getRestaurant(),this.statisticsService.getStatistics());
   }
 
-  selectRestaurant(): Observable<RestaurantDTO | null> {
-    const store = localStorage.getItem('rootState');
+  selectMenuList(): Observable<MenuDTO[] | null> {
+    const store = localStorage.getItem('menuList');
     if(!store) return of(null);
-    return of(JSON.parse(store).restaurant);
+    return of(JSON.parse(store));
   }
 
-  selectStatistics(): Observable<Statistics | null> {
+  selectDrinks(): Observable<DrinkGroupDTO[] | null> {
+    const store = localStorage.getItem('drinks');
+    if(!store) return of(null);
+    return of(JSON.parse(store));
+  }
+
+  selectStatistics(): Observable<Statistics[] | null> {
+    const store = localStorage.getItem('statistics');
+    if(!store) return of(null);
+    return of(JSON.parse(store).statistics)
+  }
+
+  selectCurrentStatistics(): Observable<Statistics[] | null> {
     const store = localStorage.getItem('rootState');
     if(!store) return of(null);
     return of(JSON.parse(store).statistics)

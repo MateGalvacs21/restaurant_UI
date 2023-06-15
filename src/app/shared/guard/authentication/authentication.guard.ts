@@ -17,7 +17,9 @@ export class AuthenticationGuard implements CanActivate {
       this.authService.getLogged(loggedUserObj.id).subscribe((user) => {
         if (!user) {
           localStorage.removeItem('loggedUser');
-          localStorage.removeItem('rootState');
+          localStorage.removeItem('statistics');
+          localStorage.removeItem('menuList');
+          localStorage.removeItem('drinks');
           this.router.navigate(['login']).then(() => true);
           return false;
         }

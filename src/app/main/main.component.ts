@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingService } from "../shared/services/loading/loading.service";
 import { StoreService } from "../shared/services/data/store.service";
-import { RootState } from "../shared/models/root-state.model";
 
 @Component({
   selector: 'app-main',
@@ -21,8 +20,9 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.makeNavbarToggleable();
    this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
-     const rootState: RootState = {restaurant: restaurant, statistics: statistics};
-     localStorage.setItem('rootState', JSON.stringify(rootState));
+     localStorage.setItem('menuList',JSON.stringify(restaurant?.menu));
+     localStorage.setItem('drinks', JSON.stringify( restaurant?.drinks));
+     localStorage.setItem('statistics', JSON.stringify({statistics: statistics}));
      this.loadingService.hide();
    })
   }

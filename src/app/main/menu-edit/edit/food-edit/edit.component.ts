@@ -50,10 +50,10 @@ export class EditComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((param) => {
       this.menuEdited = param.get("id");
     });
-    this.storeService.selectRestaurant().subscribe((restaurant) => {
-      this.menuList = restaurant?.menu ? restaurant.menu : [];
+    this.storeService.selectMenuList().subscribe((menu) => {
+      this.menuList = menu ? menu : [];
       if (this.menuEdited) {
-        this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
+        this.loadMenu(this.menuList.find((menuItem) => menuItem.id === this.menuEdited));
       }
     })
     modalConfig('mouseenter');
@@ -130,16 +130,12 @@ export class EditComponent implements OnInit {
       }
 
       this.menuEditService.patchMenu(this.menuList).subscribe((restaurant) => {
-        const store  = localStorage.getItem('rootState');
+        const store  = localStorage.getItem('menuList');
         if (!store){
           this.toastService.error("Szerverhiba! 😶");
           return;
         }
-        const newState = {
-          restaurant: restaurant,
-          statistics: JSON.parse(store).statistics
-        };
-        localStorage.setItem('rootState', JSON.stringify(newState));
+        localStorage.setItem('menuList', JSON.stringify(restaurant?.menu));
         this.toastService.success("Sikeres mentés!");
         this.loadingService.hide();
       });

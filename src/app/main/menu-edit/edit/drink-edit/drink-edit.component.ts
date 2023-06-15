@@ -46,10 +46,10 @@ export class DrinkEditComponent implements OnInit{
     this.activatedRoute.paramMap.subscribe((param) => {
       this.drinkEdit = param.get("id");
     });
-    this.storeService.selectRestaurant().subscribe((restaurant) => {
-      this.drinkList = restaurant?.drinks ? restaurant.drinks : [];
+    this.storeService.selectDrinks().subscribe((drinks) => {
+      this.drinkList = drinks ? drinks : [];
       if(this.drinkEdit) {
-        this.loadDrink(restaurant?.drinks.find((drinkItem) => drinkItem.nameoftype === this.drinkEdit));
+        this.loadDrink(this.drinkList.find((drinkItem) => drinkItem.nameoftype === this.drinkEdit));
       }
     })
   }
@@ -88,16 +88,12 @@ export class DrinkEditComponent implements OnInit{
       }
 
       this.menuEditService.patchDrink(this.drinkList).subscribe((restaurant) => {
-        const store  = localStorage.getItem('rootState');
+        const store  = localStorage.getItem('drinks');
         if (!store){
           this.toastService.error("Szerverhiba! 😶");
           return;
         }
-        const newState = {
-          restaurant: restaurant,
-          statistics: JSON.parse(store).statistics
-        };
-        localStorage.setItem('rootState', JSON.stringify(newState));
+        localStorage.setItem('drinks', JSON.stringify(restaurant?.drinks));
         this.toastService.success("Sikeres mentés!");
         this.loadingService.hide();
       });

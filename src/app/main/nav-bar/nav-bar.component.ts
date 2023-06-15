@@ -37,7 +37,9 @@ export class NavBarComponent implements OnInit {
     this.loader.show();
     this.authService.logout(userId).subscribe({
       next: () => {
-        localStorage.removeItem('rootState');
+        localStorage.removeItem('menuList');
+        localStorage.removeItem('drinks');
+        localStorage.removeItem('statistics');
         localStorage.removeItem("loggedUser");
         this.loader.hide();
         this.router.navigate(['login']).then(() => true);

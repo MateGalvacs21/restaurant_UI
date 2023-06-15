@@ -26,14 +26,20 @@ export class MenuEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storageService.selectRestaurant().subscribe((restaurant) => {
-      if (!restaurant) {
+    this.storageService.selectMenuList().subscribe((storedMenu) => {
+      if (!storedMenu) {
         this.menuList = [];
+        return;
+      }
+      this.menuList = storedMenu.sort(this.compare);
+    }).unsubscribe();
+
+    this.storageService.selectDrinks().subscribe((storedDrinks) => {
+      if (!storedDrinks) {
         this.drinkList = [];
         return;
       }
-      this.menuList = restaurant.menu.sort(this.compare);
-      this.drinkList = restaurant.drinks;
+      this.drinkList = storedDrinks;
     }).unsubscribe();
     modalConfig('click');
   }
@@ -52,6 +58,7 @@ export class MenuEditComponent implements OnInit {
       const newMenuList = this.menuList.filter((listedMenu) => listedMenu.id !== this.selectedMenu[0].id)
     this.menuEditService.patchMenu(newMenuList).subscribe((restaurant) => {
       this.menuList = restaurant?.menu ? restaurant.menu.sort(this.compare) : [];
+      localStorage.setItem('menuList', JSON.stringify(restaurant?.menu));
       this.toastService.success("Sikeres törlés!");
     })
   }
@@ -60,6 +67,7 @@ export class MenuEditComponent implements OnInit {
     const newDrinkList = this.drinkList.filter((group)=> group.nameoftype !== this.selectedDrink[0].nameoftype)
     this.menuEditService.patchDrink(newDrinkList).subscribe((restaurant) => {
       this.drinkList = restaurant?.drinks ? restaurant.drinks : [];
+      localStorage.setItem('drinks', JSON.stringify(this.drinkList));
       this.toastService.success("Sikeres törlés!");
     })
   }
