@@ -29,7 +29,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.store.selectUserIsAdmin();
-    modalConfig('DOMContentLoaded');
+    modalConfig('mouseenter');
   }
 
   public logOut(): void {

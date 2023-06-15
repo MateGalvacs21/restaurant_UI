@@ -42,7 +42,7 @@ export class DrinkEditComponent implements OnInit{
               private toastService: ToastrService) {
   }
   ngOnInit(): void {
-    modalConfig('click');
+    modalConfig('mouseenter');
     this.activatedRoute.paramMap.subscribe((param) => {
       this.drinkEdit = param.get("id");
     });

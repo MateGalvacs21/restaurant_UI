@@ -56,7 +56,7 @@ export class EditComponent implements OnInit {
         this.loadMenu(restaurant?.menu.find((menuItem) => menuItem.id === this.menuEdited));
       }
     })
-    modalConfig('click');
+    modalConfig('mouseenter');
   }
 
   onSubmit() {
