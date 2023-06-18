@@ -21,6 +21,9 @@ import { DrinkEditComponent } from './main/menu-edit/edit/drink-edit/drink-edit.
 import { DrinkEditModalComponent } from './main/menu-edit/edit/drink-edit/drink-edit-modal/drink-edit-modal.component';
 import { ToastrModule } from "ngx-toastr";
 import { DialogComponent } from './shared/components/dialog/dialog.component';
+import { AllOrdOrderComponent } from './main/statistics/queries/all-ord-order/all-ord-order.component';
+import { ByTypeComponent } from './main/statistics/queries/by-type/by-type.component';
+import { ByPaymentComponent } from './main/statistics/queries/by-payment/by-payment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +38,10 @@ import { DialogComponent } from './shared/components/dialog/dialog.component';
     EditComponent,
     DrinkEditComponent,
     DrinkEditModalComponent,
-    DialogComponent
+    DialogComponent,
+    AllOrdOrderComponent,
+    ByTypeComponent,
+    ByPaymentComponent
   ],
   imports: [
     BrowserModule,

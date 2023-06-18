@@ -1,1 +1,21 @@
-<p>statistics works!</p>
+<div class="columns is-mobile">
+  <div class="column">
+    <nav class="navbar is-light">
+      <a class="navbar-item {{wrapper === 'all'? 'wrapper-active' : ''}}" (click)="setAll()">Összes mai rendelés</a>
+      <a class="navbar-item {{wrapper === 'type'? 'wrapper-active' : ''}}" (click)="setType()">Típus alapján</a>
+      <a class="navbar-item {{wrapper === 'payment'? 'wrapper-active' : ''}}" (click)="setPayment()">Fizetési módok</a>
+    </nav>
+  </div>
+  <div class="column"></div>
+  <div class="column">
+    <input #datePicker type="date" value="{{now}}">
+  </div>
+  <div class="column">
+    <button class="button is-primary" (click)="changeDate(datePicker.value)">Frissítés</button>
+  </div>
+</div>
+<div>
+  <app-all-ord-order [statistics]="statistics" *ngIf="wrapper === 'all'"></app-all-ord-order>
+  <app-by-type [statistics]="statistics" *ngIf="wrapper === 'type'"></app-by-type>
+  <app-by-payment [statistics]="statistics" *ngIf="wrapper === 'payment'"></app-by-payment>
+</div>

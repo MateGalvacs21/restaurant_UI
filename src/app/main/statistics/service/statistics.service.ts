@@ -9,16 +9,29 @@ import { ConfigurationService } from "../../../shared/services/configuration/con
 })
 export class StatisticsService {
   private readonly restaurantId = this.getId();
+  private date: string = this.createDateString(new Date());
+
+  public setDate(date: Date) {
+    this.date = this.createDateString(date);
+  }
+
+  get dateString(): string {
+    return this.date;
+  }
   constructor(private http: HttpClient) { }
 
   getStatistics(): Observable<Statistics[] | null> {
     if(!this.restaurantId) return of(null);
-    return this.http.get<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + this.restaurantId);
+    return this.http.get<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + this.restaurantId + '/' + this.date);
   }
 
   private getId(): string {
-    const restaurant = localStorage.getItem("restaurant");
-    if (!restaurant) return "";
-    return JSON.parse(restaurant).restaurantId;
+    const user = localStorage.getItem("loggedUser");
+    if (!user) return "";
+    return JSON.parse(user).restaurantId;
+  }
+
+  private createDateString(date: Date): string {
+    return `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' :''}${date.getMonth() + 1}-${date.getDate()}`;
   }
 }
