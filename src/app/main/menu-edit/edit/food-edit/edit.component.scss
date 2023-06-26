@@ -1,0 +1,48 @@
+.card-main {
+  background-color: white;
+  margin: unset;
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  overflow: auto;
+}
+
+.card-content {
+  margin: 15%;
+}
+
+input, .select, button{
+  margin-bottom: 5%;
+}
+
+h1{
+  font-size: 35px;
+  margin-bottom: 3%;
+}
+
+select{
+  width: 300px;
+}
+
+.add-button {
+  margin-bottom: 3%;
+}
+
+.delete-button{
+  width: 30px;
+  height: 30px;
+}
+
+.is-disabled {
+  pointer-events: none !important;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.modify-buttons {
+  margin-right: 5%;
+}

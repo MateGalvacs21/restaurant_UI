@@ -1,0 +1,34 @@
+<ng-container *ngIf="statistics.length !== 0 then orders else empty"></ng-container>
+
+
+<ng-template #empty>A mai napon nem készült statisztika!</ng-template>
+<ng-template #orders>
+  <table class="table table-custom">
+    <thead>
+    <tr>
+      <th>Azonosító</th>
+      <th>Asztal</th>
+      <th title="Position">Gyüjtő neve</th>
+      <th>Gyüjtő típusa</th>
+      <th>Ár</th>
+      <th>Áfa típusa</th>
+      <th>Dátum</th>
+      <th>Fizetés módja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let order of statistics">
+      <tr *ngFor="let item of order.items">
+        <td>{{order.id}}</td>
+        <td>{{order.table}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.afa}} %</td>
+        <td>{{order.date | date: 'yyyy MM. dd.'}}</td>
+        <td>{{order.payWithCard ? "Kártyával" : "Készpénz"}}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</ng-template>

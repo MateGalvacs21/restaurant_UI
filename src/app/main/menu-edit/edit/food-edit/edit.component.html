@@ -1,0 +1,60 @@
+<div id="modal-delete-food-item" class="modal">
+  <app-dialog (answerer)="deleteItem(deletedItem)" [dialog]="dialog"></app-dialog>
+</div>
+<div class="card card-main">
+  <div class="card-content">
+    <h1>Szerkeztés</h1>
+    <div class="item-box">
+      <input #rItem class="input is-info" type="text" (input)="buttonChange(rItem.value)"
+             placeholder="Addjon hozzá köretet vagy hozzávalók !">
+      <button class="add-button button is-info {{buttonAvailable ? '':'is-disabled'}}" (click)="addItem(rItem.value)">
+        Hozzáadás
+      </button>
+      <div class="items">
+        <ng-container *ngIf="menuItems.length ===0 then empty else items"></ng-container>
+      </div>
+    </div>
+    <form [formGroup]="menuForm">
+      <input class="input is-info" type="text" formControlName="name" placeholder="Név">
+      <input class="input is-info" type="text" formControlName="nickname" placeholder="Becenév">
+      <input class="input is-info" type="number" formControlName="price" placeholder="Ár">
+      <div class="select is-info">
+        <select formControlName="type" (change)="onTypeChange($event)">
+          <option value="">Válassz egy típust!</option>
+          <option *ngFor="let type of supportedTypes" [ngValue]="type">{{type}}</option>
+        </select>
+      </div>
+      <br/>
+      <div class="select is-info">
+        <select formControlName="afa" (change)="onAfaChange($event)">
+          <option value="">Válassz egy ÁFA típust!</option>
+          <option *ngFor="let afa of supportedAfa" [ngValue]="afa.toString()">{{afa}}</option>
+        </select>
+      </div>
+      <br/>
+      <button class="button is-success modify-buttons" type="submit" (click)="saveEditing()">Mentés</button>
+      <button class="button is-primary modify-buttons" (click)="onSubmit()">Mentés és bezárás</button>
+      <button class="button modify-buttons" (click)="cancelEditing()">Mégsem</button>
+    </form>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="item">
+    <h3>Ehhez az ételhez egy megnevezett hozzávaló/köret sincs hozzáadva </h3>
+  </div>
+</ng-template>
+<ng-template #items>
+  <div *ngFor="let item of menuItems" class="item">
+    <span>{{item}}
+      <button class="button is-danger is-light is-small js-modal-trigger"
+              (focus)="setDeletedItem(item)"
+              data-target="modal-delete-food-item"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+        fill="currentColor" class="bi bi-x"
+        viewBox="0 0 16 16">
+  <path
+    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg></button></span>
+  </div>
+</ng-template>
