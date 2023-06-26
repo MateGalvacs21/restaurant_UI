@@ -2,4 +2,6 @@
 
 
 <ng-template #empty>A mai napon nem készült statisztika!</ng-template>
-<ng-template #orders>Works!</ng-template>
+<ng-template #orders>
+    <p *ngFor="let type of statisticsList">{{type.foodType}}</p>
+</ng-template>
