@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoreService } from "../../shared/services/data/store.service";
 import { Statistics } from "../../shared/models/order.model";
 import { StatisticsService } from "./service/statistics.service";
 import { WrapperType } from "../../shared/models/wrapper.type";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-statistics',
@@ -10,19 +11,24 @@ import { WrapperType } from "../../shared/models/wrapper.type";
   styleUrls: ['./statistics.component.scss']
 })
 
-export class StatisticsComponent implements OnInit{
+export class StatisticsComponent implements OnInit, OnDestroy{
   now = this.statisticService.dateString;
   statistics: Statistics[] = [];
   wrapper: WrapperType = "all";
+  destroy$ = new Subject<void>();
   constructor(private storageService: StoreService, private statisticService: StatisticsService) {
   }
   ngOnInit(): void {
     this.storageService.selectStatistics()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((statisticList) => {
         this.statistics = statisticList ? statisticList : [];
-        console.log(this.statistics)
       })
-    console.log(this.now);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   changeDate(value: string) {
