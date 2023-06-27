@@ -25,6 +25,11 @@ export class StatisticsService {
     return this.http.get<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + this.restaurantId + '/' + this.date);
   }
 
+  postStatistics(id: string, payWithCard: boolean): Observable<any> {
+    if(!this.restaurantId) return of(null);
+    return this.http.post<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + id + '/' + payWithCard,{});
+  }
+
   private getId(): string {
     const user = localStorage.getItem("loggedUser");
     if (!user) return "";
