@@ -3,9 +3,24 @@
 
 <ng-template #empty>A mai napon nem készült statisztika!</ng-template>
 <ng-template #orders>
-    <p *ngFor="let type of statisticsList">{{type.foodType}}</p>
-    <p *ngFor="let type of statisticsList">{{type.count}}</p>
-    <p *ngFor="let type of statisticsList">{{type.amount}}</p>
-    <p *ngFor="let type of statisticsList">{{type.afa5}}</p>
-    <p *ngFor="let type of statisticsList">{{type.afa27}}</p>
+    <table class="table table-custom">
+        <thead>
+            <tr>
+                <th>Gyüjtő típusa</th>
+                <th>Db</th>
+                <th>Teljes összeg</th>
+                <th>ÁFA5</th>
+                <th>ÁFA27</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let type of statisticsList">
+                <td>{{type.foodType}}</td>
+                <td>{{type.count}}</td>
+                <td>{{type.amount}}</td>
+                <td>{{type.afa5}}</td>
+                <td>{{type.afa27}}</td>
+            </tr>
+        </tbody>
+    </table>
 </ng-template>
