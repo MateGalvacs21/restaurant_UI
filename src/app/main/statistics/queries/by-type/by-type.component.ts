@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Statistics } from "../../../../shared/models/order.model";
+import { TypeQuery } from 'src/app/shared/models/type-query.model';
 
 @Component({
   selector: 'app-by-type',
@@ -8,5 +8,6 @@ import { Statistics } from "../../../../shared/models/order.model";
 })
 export class ByTypeComponent {
   @Input()
-  statistics : Statistics[] = []
+  statisticsList: TypeQuery[] = [];
+
 }

@@ -1,5 +1,26 @@
-<ng-container *ngIf="statistics.length !== 0 then orders else empty"></ng-container>
+<ng-container *ngIf="statisticsList.length !== 0 then orders else empty"></ng-container>
 
 
 <ng-template #empty>A mai napon nem készült statisztika!</ng-template>
-<ng-template #orders>Works!</ng-template>
+<ng-template #orders>
+    <table class="table table-custom">
+        <thead>
+            <tr>
+                <th>Gyüjtő típusa</th>
+                <th>Db</th>
+                <th>Teljes összeg</th>
+                <th>ÁFA5</th>
+                <th>ÁFA27</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let type of statisticsList">
+                <td>{{type.foodType}}</td>
+                <td>{{type.count}}</td>
+                <td>{{type.amount}}</td>
+                <td>{{type.afa5}}</td>
+                <td>{{type.afa27}}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>

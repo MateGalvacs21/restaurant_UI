@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Statistics } from "../../../../shared/models/order.model";
+import { PaymentQuery } from 'src/app/shared/models/payment-query.model';
 
 @Component({
   selector: 'app-by-payment',
@@ -8,5 +8,6 @@ import { Statistics } from "../../../../shared/models/order.model";
 })
 export class ByPaymentComponent {
   @Input()
-  statistics : Statistics[] = []
+  statisticList: PaymentQuery[] = [];
+
 }

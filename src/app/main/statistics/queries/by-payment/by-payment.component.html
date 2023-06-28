@@ -1,5 +1,22 @@
-<ng-container *ngIf="statistics.length !== 0 then orders else empty"></ng-container>
+<ng-container *ngIf="statisticList.length !== 0 then orders else empty"></ng-container>
 
 
 <ng-template #empty>A mai napon nem készült statisztika!</ng-template>
-<ng-template #orders>Works!</ng-template>
+<ng-template #orders>
+    <table class="table table-custom">
+        <thead>
+            <tr>
+                <th>Fizetés módja</th>
+                <th>Db</th>
+                <th>Teljes összeg</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of statisticList">
+                <td>{{payment.paymentMethod ? "Kártyával" : "Készpénz"}}</td>
+                <td>{{payment.count}}</td>
+                <td>{{payment.amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>
