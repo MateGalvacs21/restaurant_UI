@@ -1,4 +1,4 @@
-export type TypeGuery = {
+export type TypeQuery = {
     foodType : string;
     count : number;
     amount : number;
