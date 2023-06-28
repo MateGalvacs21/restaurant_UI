@@ -24,6 +24,7 @@ import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { AllOrdOrderComponent } from './main/statistics/queries/all-ord-order/all-ord-order.component';
 import { ByTypeComponent } from './main/statistics/queries/by-type/by-type.component';
 import { ByPaymentComponent } from './main/statistics/queries/by-payment/by-payment.component';
+import { DetailModalComponent } from './main/orders/detail-modal/detail-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import { ByPaymentComponent } from './main/statistics/queries/by-payment/by-paym
     DialogComponent,
     AllOrdOrderComponent,
     ByTypeComponent,
-    ByPaymentComponent
+    ByPaymentComponent,
+    DetailModalComponent
   ],
   imports: [
     BrowserModule,
