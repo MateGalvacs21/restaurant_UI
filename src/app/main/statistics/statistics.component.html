@@ -16,6 +16,6 @@
 </div>
 <div>
   <app-all-ord-order [statistics]="statistics" *ngIf="wrapper === 'all'"></app-all-ord-order>
-  <app-by-type [statistics]="statistics" *ngIf="wrapper === 'type'"></app-by-type>
-  <app-by-payment [statistics]="statistics" *ngIf="wrapper === 'payment'"></app-by-payment>
+  <app-by-type [statisticsList]="typeQueries" *ngIf="wrapper === 'type'"></app-by-type>
+  <app-by-payment [statisticList]="paymentQueries" *ngIf="wrapper === 'payment'"></app-by-payment>
 </div>
