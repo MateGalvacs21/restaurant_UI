@@ -4,8 +4,8 @@ import { DrinkGroupDTO } from "../../shared/models/drink-group.model";
 import { StoreService } from "../../shared/services/data/store.service";
 import { MenuEditService } from "./service/menu-edit.service";
 import { ToastrService } from "ngx-toastr";
-import { modalConfig } from "../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../shared/components/dialog/helpers/types/dialog.type";
+import { ModalService } from "../../shared/services/modal/modal.service";
 
 @Component({
   selector: 'app-menu-edit',
@@ -22,7 +22,10 @@ export class MenuEditComponent implements OnInit {
     question: "Biztos törölni szeretnéd?",
     title: "Törlés"
   };
-  constructor(private storageService: StoreService, private menuEditService: MenuEditService, private toastService: ToastrService) {
+  constructor(private storageService: StoreService,
+              private menuEditService: MenuEditService,
+              private toastService: ToastrService,
+              private modal: ModalService) {
   }
 
   ngOnInit() {
@@ -41,17 +44,10 @@ export class MenuEditComponent implements OnInit {
       }
       this.drinkList = storedDrinks;
     }).unsubscribe();
-    modalConfig('click');
   }
 
-  compare(a: MenuDTO, b: MenuDTO) {
-    if (a.type < b.type) {
-      return -1;
-    }
-    if (a.type > b.type) {
-      return 1;
-    }
-    return 0;
+  openModal(tag: string): void {
+    this.modal.openModal(tag);
   }
 
   deleteMenu() {
@@ -78,6 +74,16 @@ export class MenuEditComponent implements OnInit {
 
   setSelectedDrink(drink: DrinkGroupDTO) {
     this.selectedDrink = [drink];
+  }
+
+  private compare(a: MenuDTO, b: MenuDTO) {
+    if (a.type < b.type) {
+      return -1;
+    }
+    if (a.type > b.type) {
+      return 1;
+    }
+    return 0;
   }
 }
 

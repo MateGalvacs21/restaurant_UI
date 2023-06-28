@@ -33,8 +33,10 @@
     <div class="buttons">
       <button class="button is-info is-fullwidth">Részletek</button>
       <button class="button is-success is-fullwidth">Rendelés lezárása</button>
-      <button class="button is-danger is-fullwidth js-modal-trigger" (focus)="setDialogToDelete()"
-              data-target="delete-dialog">Törlés
+      <button class="button is-danger is-fullwidth"
+              (click)="openModal('delete-dialog')"
+              (focus)="setDialogToDelete()"
+              >Törlés
       </button>
     </div>
   </div>

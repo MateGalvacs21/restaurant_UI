@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { OrderService } from "./service/order.service";
-import { modalConfig } from "../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../shared/components/dialog/helpers/types/dialog.type";
 import { OrderDTO } from "../../shared/models/order.model";
 import { filter, take, tap } from "rxjs";
+import { ModalService } from "../../shared/services/modal/modal.service";
 
 @Component({
   selector: 'app-orders',
@@ -19,8 +19,11 @@ export class OrdersComponent {
     question: ``,
     title: ""
   };
-  constructor(private orderService: OrderService) {
-    modalConfig("pageshow");
+  constructor(private orderService: OrderService, private modalService: ModalService) {
+  }
+
+  public openModal(tag: string): void {
+    this.modalService.openModal(tag);
   }
 
   public update(): void {

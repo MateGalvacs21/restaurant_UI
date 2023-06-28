@@ -43,7 +43,7 @@ import { DetailModalComponent } from './main/orders/detail-modal/detail-modal.co
     AllOrdOrderComponent,
     ByTypeComponent,
     ByPaymentComponent,
-    DetailModalComponent
+    DetailModalComponent,
   ],
   imports: [
     BrowserModule,
