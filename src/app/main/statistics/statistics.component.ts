@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StoreService } from "../../shared/services/data/store.service";
 import { Statistics } from "../../shared/models/order.model";
 import { StatisticsService } from "./service/statistics.service";
 import { WrapperType } from "../../shared/models/wrapper.type";
@@ -14,7 +13,7 @@ import { PaymentQuery } from "../../shared/models/payment-query.model";
   styleUrls: ['./statistics.component.scss']
 })
 
-export class StatisticsComponent implements OnInit, OnDestroy{
+export class StatisticsComponent implements OnInit, OnDestroy {
   now = this.statisticService.dateString;
   statistics: Statistics[] = [];
   wrapper: WrapperType = "all";
@@ -23,10 +22,12 @@ export class StatisticsComponent implements OnInit, OnDestroy{
   typeQueries: TypeQuery[] = [];
   types: string[] = [];
   items: OrderItemDTO[] = [];
-  constructor(private storageService: StoreService, private statisticService: StatisticsService) {
+
+  constructor(private statisticService: StatisticsService) {
   }
+
   ngOnInit(): void {
-    this.storageService.selectStatistics()
+    this.statisticService.getStatistics()
       .pipe(takeUntil(this.destroy$))
       .subscribe((statisticList) => {
         this.statistics = statisticList ? statisticList : [];
@@ -42,7 +43,7 @@ export class StatisticsComponent implements OnInit, OnDestroy{
 
   changeDate(value: string) {
     this.statisticService.setDate(new Date(value));
-    this.statisticService.getStatistics().subscribe((stats) => {
+    this.statisticService.getStatistics().pipe(takeUntil(this.destroy$)).subscribe((stats) => {
       this.statistics = stats ? stats : [];
       localStorage.setItem('statistics', JSON.stringify(stats));
       this.createDataByType();
@@ -67,8 +68,7 @@ export class StatisticsComponent implements OnInit, OnDestroy{
           afa27: item.afa === 27 ? item.price : 0
         }
         this.typeQueries.push(typeQuery);
-      }
-      else {
+      } else {
         const index = this.typeQueries.findIndex(typeQuery => typeQuery.foodType === item.type);
         this.typeQueries[index] = {
           ...this.typeQueries[index],
