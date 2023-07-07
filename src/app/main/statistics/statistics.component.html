@@ -1,4 +1,4 @@
-<div class="columns is-mobile">
+<div class="columns is-mobile header">
   <div class="column">
     <nav class="navbar is-light">
       <a class="navbar-item {{wrapper === 'all'? 'wrapper-active' : ''}}" (click)="setAll()">Összes mai rendelés</a>
@@ -6,7 +6,6 @@
       <a class="navbar-item {{wrapper === 'payment'? 'wrapper-active' : ''}}" (click)="setPayment()">Fizetési módok</a>
     </nav>
   </div>
-  <div class="column"></div>
   <div class="column">
     <input #datePicker type="date" value="{{now}}">
   </div>
@@ -14,8 +13,16 @@
     <button class="button is-primary" (click)="changeDate(datePicker.value)">Frissítés</button>
   </div>
 </div>
-<div>
-  <app-all-ord-order [statistics]="statistics" *ngIf="wrapper === 'all'"></app-all-ord-order>
-  <app-by-type [statisticsList]="typeQueries" *ngIf="wrapper === 'type'"></app-by-type>
-  <app-by-payment [statisticList]="paymentQueries" *ngIf="wrapper === 'payment'"></app-by-payment>
+<div class="columns is-mobile is-multiline">
+  <div class="column is-8 is-narrow">
+    <app-all-ord-order [statistics]="statistics" *ngIf="wrapper === 'all'"></app-all-ord-order>
+    <app-by-type [statisticsList]="typeQueries" *ngIf="wrapper === 'type'"></app-by-type>
+    <app-by-payment [statisticList]="paymentQueries" *ngIf="wrapper === 'payment'"></app-by-payment>
+  </div>
+  <div class="column is-narrow info-box" *ngIf="afa5+afa27 !== 0">
+    <h3>Összeg: {{afa27+afa5}} Ft</h3>
+    <h3>ÁFA:</h3>
+    <h3>5%: {{afa5}} Ft</h3>
+    <h3>27%: {{afa27}} Ft</h3>
+  </div>
 </div>

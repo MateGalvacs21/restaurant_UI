@@ -22,7 +22,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   typeQueries: TypeQuery[] = [];
   types: string[] = [];
   items: OrderItemDTO[] = [];
-
+ afa5: number = 0;
+ afa27: number = 0;
   constructor(private statisticService: StatisticsService) {
   }
 
@@ -33,6 +34,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         this.statistics = statisticList ? statisticList : [];
         this.createDataByType();
         this.createPaymentData();
+        this.calculateAmount();
       })
   }
 
@@ -48,10 +50,14 @@ export class StatisticsComponent implements OnInit, OnDestroy {
       localStorage.setItem('statistics', JSON.stringify(stats));
       this.createDataByType();
       this.createPaymentData();
+      this.calculateAmount();
     });
   }
 
   public createDataByType() {
+    this.items = [];
+    this.types = [];
+    this.typeQueries = [];
     this.statistics.forEach(statistic => {
       statistic.items.forEach(item => {
         this.items.push(item);
@@ -81,7 +87,23 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     })
   }
 
+  public calculateAmount(): void {
+    this.afa5 = 0;
+    this.afa27 = 0;
+    this.statistics.forEach(stat => {
+      stat.items.forEach(item => {
+        if (item.afa === 5) {
+          this.afa5 += item.price;
+        }
+        else {
+          this.afa27 += item.price;
+        }
+      })
+    })
+  }
+
   public createPaymentData() {
+    this.paymentQueries = [];
     if (this.statistics.length !== 0) {
       this.paymentQueries = [
         {
@@ -96,7 +118,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         }];
     }
     this.statistics.forEach(statistic => {
-        if (statistic.payWithCard) {
+        if (statistic.card === 'yes') {
           this.paymentQueries[0].count++;
           this.paymentQueries[0].amount += statistic.amount;
         } else {

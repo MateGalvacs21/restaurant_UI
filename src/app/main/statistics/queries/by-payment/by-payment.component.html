@@ -15,7 +15,7 @@
             <tr *ngFor="let payment of statisticList">
                 <td>{{payment.paymentMethod ? "Kártyával" : "Készpénz"}}</td>
                 <td>{{payment.count}}</td>
-                <td>{{payment.amount}}</td>
+                <td>{{payment.amount}} Ft</td>
             </tr>
         </tbody>
     </table>

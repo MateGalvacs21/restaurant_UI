@@ -20,4 +20,4 @@ export type PatchOrder = {
   amount: number;
 };
 
-export type Statistics = OrderDTO & {payWithCard: boolean}
+export type Statistics = OrderDTO & {card: string}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConfigurationService } from "../../../shared/services/configuration/configuration.service";
 import { HttpClient } from "@angular/common/http";
-import { filter, map, Observable, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { OrderDTO } from "../../../shared/models/order.model";
 import { StatisticsService } from "../../statistics/service/statistics.service";
 
@@ -28,14 +28,6 @@ export class OrderService {
       return this.http.delete<OrderDTO[]>(ConfigurationService.apiURL() + "/api/order/" + orders[0].id);
   }
 
-  public closeOrder(orders: OrderDTO[], payWithCard: boolean): Observable<any | null> {
-    if(!this.restaurantId) return of(null);
-    return this.statService.postStatistics(orders[0].id, payWithCard)
-      .pipe(
-        filter(response => response.stored),
-        map(() => this.deleteOrders(orders))
-      );
-  }
   private getId(): string {
     const user = localStorage.getItem("loggedUser");
     if (!user) return "";

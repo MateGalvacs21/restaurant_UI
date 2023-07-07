@@ -27,7 +27,8 @@ export class StatisticsService {
 
   postStatistics(id: string, payWithCard: boolean): Observable<any> {
     if(!this.restaurantId) return of(null);
-    return this.http.post<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + id + '/' + payWithCard,{});
+    const card = payWithCard ? 'yes' : 'no'
+    return this.http.post<Statistics[]>(ConfigurationService.apiURL() + "/api/statistics/" + id + '/' + card,{});
   }
 
   private getId(): string {

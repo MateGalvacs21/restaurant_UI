@@ -1,1 +1,38 @@
-<p>detail-modal works!</p>
+<div class="modal-background"></div>
+<div class="modal-card">
+  <header class="modal-card-head">
+    <p class="modal-card-title">{{state === 'close' ? 'Rendelés lezárása' : 'Részletek'}}
+      '</p>
+    <button class="delete" aria-label="close"></button>
+  </header>
+  <div class="modal-card-body">
+    <div *ngIf="order.length !== 0">
+      <ng-container *ngIf="state==='close' then close; else details"></ng-container>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #close>
+  <label class="toggle-title">Kártyás fizetés</label>
+  <label class="switch">
+    <input #toggle type="checkbox" [checked]="card" (change)="setToggle(toggle.checked)">
+    <span class="slider round"></span>
+  </label>
+  <br>
+  <button class="button is-primary" (click)="printing()">Nyomtatás</button>
+</ng-template>
+<ng-template #details>
+  <h2><strong>Asztal:</strong> <i>{{order[0].table}}</i></h2>
+  <div class="order-items">
+    <div class="order-item" *ngFor="let orderItems of order[0].items">
+      <h6><strong>{{orderItems.nickname}}:</strong></h6>
+      <h6 *ngFor="let removedItems of orderItems.removedItems"><strong> -{{removedItems}} </strong>|</h6>
+      <h6 *ngFor="let extraItems of orderItems.extraItems"><strong> +{{extraItems}} </strong>|</h6>
+      <h6> Áfa típusa: <strong>{{orderItems.afa}}% </strong>|</h6>
+      <h6> Ár: <strong>{{orderItems.price}} Ft</strong> |</h6>
+    </div>
+  </div>
+  <h3>Összeg: <strong>{{order[0].amount}} Ft</strong></h3>
+  <h3>Rendelés ideje: <strong>{{order[0].date | date: 'yyyy MM. dd. HH:mm:ss '}}</strong></h3>
+</ng-template>
