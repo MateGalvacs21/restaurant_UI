@@ -24,7 +24,6 @@ export class OrdersComponent {
   };
   selectedOrder: OrderDTO[] = [];
   payment = false;
-
   constructor(private orderService: OrderService,
               private modalService: ModalService,
               private toast: ToastrService,
@@ -34,7 +33,6 @@ export class OrdersComponent {
   public openModal(tag: string): void {
     this.modalService.openModal(tag);
   }
-
   setPayment(payWithCard: boolean) {
     this.payment = payWithCard;
   }
@@ -43,6 +41,10 @@ export class OrdersComponent {
     this.orders$ = this.orderService.getOrdersByRestaurantId();
   }
 
+  setYesDialog() {
+      this.modalService.closeModal(document.getElementById('close-dialog'));
+      this.openModal('details-close');
+  }
   public deleteOrder() {
     this.orderService.deleteOrders(this.selectedOrder)
       .pipe(
@@ -70,6 +72,12 @@ export class OrdersComponent {
 
   public setDetailsClose(state: string) {
     this.detailsCloseState = state;
+    this.dialog = {
+      class: "warning",
+      question: `Biztos leszeretnéd zárni ezt a redelést? Amennyiben nem kerül sor nyomtatásra, a rendelésről akkor is statisztika
+      készül és törlődik a listáról.`,
+      title: `${this.selectedOrder[0].table.toUpperCase()} asztal lezárása`
+    }
   }
 
   public setDialogToDelete() {

@@ -2,6 +2,9 @@
 <div id="delete-dialog" class="modal">
   <app-dialog (answerer)="deleteOrder()" [dialog]="dialog"></app-dialog>
 </div>
+<div id="close-dialog" class="modal">
+  <app-dialog (answerer)="setYesDialog()" [dialog]="dialog"></app-dialog>
+</div>
 <div id="details-close" class="modal">
   <app-detail-modal
     [order]="selectedOrder"
@@ -43,7 +46,7 @@
       </button>
       <button class="button is-success is-fullwidth"
               (focus)="setDetailsClose('close')"
-              (click)="openModal('details-close')">Rendelés lezárása
+              (click)="openModal('close-dialog')">Rendelés lezárása
       </button>
       <button class="button is-danger is-fullwidth"
               (click)="openModal('delete-dialog')"
