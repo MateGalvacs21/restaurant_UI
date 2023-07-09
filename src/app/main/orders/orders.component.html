@@ -1,1 +1,58 @@
-<p>orders works!</p>
+<ng-container *ngIf="(orders$ | async) === null then load; else content"></ng-container>
+<div id="delete-dialog" class="modal">
+  <app-dialog (answerer)="deleteOrder()" [dialog]="dialog"></app-dialog>
+</div>
+<div id="close-dialog" class="modal">
+  <app-dialog (answerer)="setYesDialog()" [dialog]="dialog"></app-dialog>
+</div>
+<div id="details-close" class="modal">
+  <app-detail-modal
+    [order]="selectedOrder"
+    [state]="detailsCloseState"
+    (payWithCard)="setPayment($event)"
+    (orderEnd)="close()"
+  >
+  </app-detail-modal>
+</div>
+<ng-template #content>
+  <div class="columns">
+    <div class="column is-8">
+      <button class="button is-primary is-medium" (click)="update()">Frissítés</button>
+    </div>
+  </div>
+
+  <div class="columns is-mobile is-multiline">
+    <ng-container *ngIf="(orders$ | async)?.length === 0 then empty; else withOrders"></ng-container>
+  </div>
+</ng-template>
+<ng-template #load>
+  <img src="assets/loading.gif" alt="loading...">
+</ng-template>
+<ng-template #empty>
+  <div class="card column is-4">
+    <h3 class="card-header-title"> Jelenleg ninncs rendelése, próbálkozzon frissítéssel!</h3>
+  </div>
+</ng-template>
+<ng-template #withOrders>
+  <div class="card column is-narrow" *ngFor="let order of (orders$ | async)?.slice()"
+       (mouseenter)="selectOrder(order)">
+    <h3 class="card-header-title">Asztal: {{order.table}}</h3>
+    <h5>Összeg: <strong>{{order.amount}} Ft </strong></h5>
+    <h5>Dátum: <strong>{{order.date | date: 'yyyy MM. dd.'}}</strong></h5>
+    <div class="buttons">
+      <button class="button is-info is-fullwidth"
+              (focus)="setDetailsClose('details')"
+              (click)="openModal('details-close')">Részletek
+      </button>
+      <button class="button is-success is-fullwidth"
+              (focus)="setDetailsClose('close')"
+              (click)="openModal('close-dialog')">Rendelés lezárása
+      </button>
+      <button class="button is-danger is-fullwidth"
+              (click)="openModal('delete-dialog')"
+              (focus)="setDialogToDelete()"
+      >Törlés
+      </button>
+    </div>
+  </div>
+</ng-template>

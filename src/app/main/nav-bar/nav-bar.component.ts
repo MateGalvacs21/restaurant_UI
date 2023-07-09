@@ -4,8 +4,8 @@ import { Router } from "@angular/router";
 import { LoadingService } from "../../shared/services/loading/loading.service";
 import { StoreService } from "../../shared/services/data/store.service";
 import { ToastrService } from "ngx-toastr";
-import { modalConfig } from "../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../shared/components/dialog/helpers/types/dialog.type";
+import { ModalService } from "../../shared/services/modal/modal.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -24,12 +24,16 @@ export class NavBarComponent implements OnInit {
               private router: Router,
               private loader: LoadingService,
               private store: StoreService,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private modal: ModalService) {
   }
 
   ngOnInit(): void {
     this.isAdmin = this.store.selectUserIsAdmin();
-    modalConfig('mouseenter');
+  }
+
+  public openModal(tag: string): void {
+    this.modal.openModal(tag);
   }
 
   public logOut(): void {

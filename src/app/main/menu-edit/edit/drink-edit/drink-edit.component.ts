@@ -8,8 +8,8 @@ import { DrinkItemDTO } from "../../../../shared/models/drink-item.model";
 import { DrinkGroupDTO } from "../../../../shared/models/drink-group.model";
 import { Afa } from "../../../../shared/models/coin.model";
 import { ToastrService } from "ngx-toastr";
-import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../../../shared/components/dialog/helpers/types/dialog.type";
+import { ModalService } from "../../../../shared/services/modal/modal.service";
 
 @Component({
   selector: 'app-drink-edit',
@@ -39,10 +39,10 @@ export class DrinkEditComponent implements OnInit{
               private router: Router,
               private menuEditService: MenuEditService,
               private loadingService: LoadingService,
-              private toastService: ToastrService) {
+              private toastService: ToastrService,
+              private modal: ModalService) {
   }
   ngOnInit(): void {
-    modalConfig('mouseenter');
     this.activatedRoute.paramMap.subscribe((param) => {
       this.drinkEdit = param.get("id");
     });
@@ -52,6 +52,10 @@ export class DrinkEditComponent implements OnInit{
         this.loadDrink(this.drinkList.find((drinkItem) => drinkItem.nameoftype === this.drinkEdit));
       }
     })
+  }
+
+  openModal(tag: string) {
+    this.modal.openModal(tag);
   }
 
   onAfaChange(event: any) {

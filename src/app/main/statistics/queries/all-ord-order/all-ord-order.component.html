@@ -26,7 +26,7 @@
         <td>{{item.price}}</td>
         <td>{{item.afa}} %</td>
         <td>{{order.date | date: 'yyyy MM. dd.'}}</td>
-        <td>{{order.payWithCard ? "Kártyával" : "Készpénz"}}</td>
+        <td>{{order.card === 'yes' ? "Kártyával" : "Készpénz"}}</td>
       </tr>
     </ng-container>
     </tbody>

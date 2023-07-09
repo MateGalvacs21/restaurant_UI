@@ -7,8 +7,8 @@ import { Afa } from "../../../../shared/models/coin.model";
 import { MenuEditService } from "../../service/menu-edit.service";
 import { LoadingService } from "../../../../shared/services/loading/loading.service";
 import { ToastrService } from "ngx-toastr";
-import { modalConfig } from "../../../../shared/components/dialog/helpers/function/modal-configuration";
 import { DialogType } from "../../../../shared/components/dialog/helpers/types/dialog.type";
+import { ModalService } from "../../../../shared/services/modal/modal.service";
 
 @Component({
   selector: 'app-edit',
@@ -43,7 +43,8 @@ export class EditComponent implements OnInit {
               private router: Router,
               private menuEditService: MenuEditService,
               private loadingService: LoadingService,
-              private toastService: ToastrService) {
+              private toastService: ToastrService,
+              private modal: ModalService) {
   }
 
   ngOnInit(): void {
@@ -56,7 +57,10 @@ export class EditComponent implements OnInit {
         this.loadMenu(this.menuList.find((menuItem) => menuItem.id === this.menuEdited));
       }
     })
-    modalConfig('mouseenter');
+  }
+
+  openModal(tag: string): void {
+    this.modal.openModal(tag);
   }
 
   onSubmit() {

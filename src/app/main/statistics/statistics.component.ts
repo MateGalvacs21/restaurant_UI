@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { StoreService } from "../../shared/services/data/store.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Statistics } from "../../shared/models/order.model";
 import { StatisticsService } from "./service/statistics.service";
 import { WrapperType } from "../../shared/models/wrapper.type";
+import { Subject, takeUntil } from "rxjs";
 import { TypeQuery } from "../../shared/models/type-query.model";
 import { OrderItemDTO } from "../../shared/models/order-item.model";
 import { PaymentQuery } from "../../shared/models/payment-query.model";
@@ -13,36 +13,51 @@ import { PaymentQuery } from "../../shared/models/payment-query.model";
   styleUrls: ['./statistics.component.scss']
 })
 
-export class StatisticsComponent implements OnInit{
+export class StatisticsComponent implements OnInit, OnDestroy {
   now = this.statisticService.dateString;
   statistics: Statistics[] = [];
   wrapper: WrapperType = "all";
+  destroy$ = new Subject<void>();
   paymentQueries: PaymentQuery[] = [];
   typeQueries: TypeQuery[] = [];
   types: string[] = [];
   items: OrderItemDTO[] = [];
-  constructor(private storageService: StoreService, private statisticService: StatisticsService) {
+ afa5: number = 0;
+ afa27: number = 0;
+  constructor(private statisticService: StatisticsService) {
   }
+
   ngOnInit(): void {
-    this.storageService.selectStatistics()
+    this.statisticService.getStatistics()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((statisticList) => {
         this.statistics = statisticList ? statisticList : [];
         this.createDataByType();
         this.createPaymentData();
+        this.calculateAmount();
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   changeDate(value: string) {
     this.statisticService.setDate(new Date(value));
-    this.statisticService.getStatistics().subscribe((stats) => {
+    this.statisticService.getStatistics().pipe(takeUntil(this.destroy$)).subscribe((stats) => {
       this.statistics = stats ? stats : [];
       localStorage.setItem('statistics', JSON.stringify(stats));
       this.createDataByType();
       this.createPaymentData();
+      this.calculateAmount();
     });
   }
 
   public createDataByType() {
+    this.items = [];
+    this.types = [];
+    this.typeQueries = [];
     this.statistics.forEach(statistic => {
       statistic.items.forEach(item => {
         this.items.push(item);
@@ -59,8 +74,7 @@ export class StatisticsComponent implements OnInit{
           afa27: item.afa === 27 ? item.price : 0
         }
         this.typeQueries.push(typeQuery);
-      }
-      else {
+      } else {
         const index = this.typeQueries.findIndex(typeQuery => typeQuery.foodType === item.type);
         this.typeQueries[index] = {
           ...this.typeQueries[index],
@@ -73,7 +87,23 @@ export class StatisticsComponent implements OnInit{
     })
   }
 
+  public calculateAmount(): void {
+    this.afa5 = 0;
+    this.afa27 = 0;
+    this.statistics.forEach(stat => {
+      stat.items.forEach(item => {
+        if (item.afa === 5) {
+          this.afa5 += item.price;
+        }
+        else {
+          this.afa27 += item.price;
+        }
+      })
+    })
+  }
+
   public createPaymentData() {
+    this.paymentQueries = [];
     if (this.statistics.length !== 0) {
       this.paymentQueries = [
         {
@@ -88,7 +118,7 @@ export class StatisticsComponent implements OnInit{
         }];
     }
     this.statistics.forEach(statistic => {
-        if (statistic.payWithCard) {
+        if (statistic.card === 'yes') {
           this.paymentQueries[0].count++;
           this.paymentQueries[0].amount += statistic.amount;
         } else {

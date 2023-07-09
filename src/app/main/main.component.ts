@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
    this.dataService.fetchData().subscribe(([restaurant, statistics]) => {
      localStorage.setItem('menuList',JSON.stringify(restaurant?.menu));
      localStorage.setItem('drinks', JSON.stringify( restaurant?.drinks));
-     localStorage.setItem('statistics', JSON.stringify({statistics: statistics}));
+     localStorage.setItem('statistics', JSON.stringify( statistics));
      this.loadingService.hide();
    })
   }
